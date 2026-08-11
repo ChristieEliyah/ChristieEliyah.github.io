@@ -520,27 +520,66 @@
   </div>
   <div class="projects">
 
-    <!-- 1 ── UE5 FPS射击游戏 (NEW with real content) -->
-    <a class="project-card" href="fps-design-doc.html" target="_blank" rel="noopener">
-      <div class="thumb">
-        <img src="thumbs/fps_game.png" alt="UE5 FPS射击游戏截图">
-      </div>
-      <div class="info">
-        <div class="name">
-          UE5 FPS 射击游戏
-          <span class="badge">★ 主力Demo</span>
+    <!-- 1 ── UE5 FPS射击游戏 (展开查看设计文档) -->
+    <details class="project-card art-expand">
+      <summary>
+        <div class="thumb">
+          <img src="thumbs/fps_game.png" alt="UE5 FPS射击游戏截图">
         </div>
-        <div class="desc">基于 UE 5.8 从零搭建的第一人称射击项目。集成 MCX Virtus 步枪完整动画系统（待机/瞄准/射击/换弹/滑铲等 38 套动画），自研 13 种命中表面 VFX（血液/混凝土/玻璃/金属/木头/水等）+ 全套 Foley 音效 + 弹孔贴花系统。Enhanced Input 输入映射、蓝图接口通讯、武器状态机、玩家状态机全套完成。</div>
-        <div class="tags">
-          <span class="tag">UE 5.8</span>
-          <span class="tag">C++ / 蓝图</span>
-          <span class="tag">武器系统</span>
-          <span class="tag">VFX/SFX</span>
-          <span class="tag">Enhanced Input</span>
+        <div class="info">
+          <div class="name">
+            UE5 FPS 射击游戏
+            <span class="badge">★ 主力Demo</span>
+          </div>
+          <div class="desc">基于 UE 5.8 从零搭建的 FPS 训练靶场 Demo。MCX Virtus 突击步枪 + 38 套动画 + 13 种命中表面响应 + Enhanced Input + 蓝图状态机 + 设计文档。▼ 展开查看设计文档</div>
+          <div class="tags">
+            <span class="tag">UE 5.8</span>
+            <span class="tag">纯蓝图</span>
+            <span class="tag">武器系统</span>
+            <span class="tag">VFX/SFX</span>
+            <span class="tag">设计文档</span>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+
+      <div class="art-detail">
+        <div style="font-size:13px; color:var(--text-secondary); line-height:1.9; max-width:760px;">
+
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:14px;">📐 设计文档摘要</p>
+
+          <p><b>项目定位：</b>UE5 FPS 训练靶场 Demo，参考 COD 新手教程关卡设计，纯蓝图开发。从 XL_FPSPack 资产包基础上进行系统化整合与定制，覆盖输入层→逻辑层→表现层的完整链路。</p>
+
+          <p style="margin-top:12px;"><b>设计目标：</b></p>
+          <ul style="margin:6px 0; padding-left:20px;">
+            <li>即时命中（Hitscan）+ 完整击中反馈链路</li>
+            <li>开火 / 瞄准 / 换弹 / 弹药管理</li>
+            <li>13 种表面物理材质差异化响应</li>
+            <li>分层动画系统（BlendSpace 无缝过渡）</li>
+            <li>武器基类 + 蓝图接口，可扩展架构</li>
+          </ul>
+
+          <p style="margin-top:12px;"><b>核心系统概览：</b></p>
+          <table style="width:100%; border-collapse:collapse; font-size:13px; margin:6px 0;">
+            <tr style="background:var(--bg-muted);"><th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">系统模块</th><th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">核心内容</th></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);">玩家角色</td><td style="padding:6px 10px; border:1px solid var(--border);">Character → BP_FPSPlayer，5 种移动状态、FOV 切换、鼠标灵敏度控制</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);">武器系统</td><td style="padding:6px 10px; border:1px solid var(--border);">BP_WeaponBase 基类 + BP_VIRTUS 突击步枪（300 BLK），弹匣 30 发，射速 600 RPM，换弹 2.5s</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);">输入系统</td><td style="padding:6px 10px; border:1px solid var(--border);">6 个 Enhanced Input Action + WASD 鼠标全映射</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);">命中检测</td><td style="padding:6px 10px; border:1px solid var(--border);">LineTrace 射线 → 物理材质判定 → 13 种差异化响应（血液/混凝土/玻璃/金属/木头/水等）</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);">靶子系统</td><td style="padding:6px 10px; border:1px solid var(--border);">BP_TargetDummy，100 HP，Timeline 击倒动画 + 自动复位</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);">动画系统</td><td style="padding:6px 10px; border:1px solid var(--border);">玩家 ABP + 武器 ABP + 2 个 BlendSpace + 换弹 AnimNotify</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);">弹壳系统</td><td style="padding:6px 10px; border:1px solid var(--border);">物理抛壳 + 碰撞音效 + 自动销毁</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);">HUD</td><td style="padding:6px 10px; border:1px solid var(--border);">Health_HUD 血量显示 + 弹药 HUD_Ammo 实时弹药计数 + 准星 Widget</td></tr>
+          </table>
+
+          <p style="margin-top:12px;"><b>技术架构：</b>分层设计 — Input 层（Enhanced Input）→ Controller 层（PlayerController）→ Character 层（BP_FPSPlayer + 状态机）→ Weapon 层（BP_WeaponBase → BP_VIRTUS）→ Feedback 层（VFX / SFX / 物理）。蓝图接口 BI_Fire 实现武器与玩家的解耦通讯。</p>
+
+          <p style="margin-top:14px; font-size:12px; color:var(--text-muted);">项目资产统计：933 个文件 | 9 个蓝图类 | 2 个接口 | 3 个枚举 | 38 套骨骼动画 | 35 个 Niagara VFX | 8 个 Sound Cue | 31 个 Sound Wave</p>
+
+          <a href="fps-design-doc.html" target="_blank" rel="noopener" style="display:inline-block; margin-top:18px; padding:8px 18px; background:var(--text); color:#fff; border-radius:5px; text-decoration:none; font-size:13px; font-weight:600;">📄 查看完整设计文档 →</a>
         </div>
       </div>
-      <div class="arrow">→</div>
-    </a>
+    </details>
 
     <!-- 2 ── OpenGL 射击游戏 -->
     <a class="project-card" href="#" target="_blank" rel="noopener">
