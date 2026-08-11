@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陈思源 · 游戏策划作品集</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --text: #2c3e50;
+    --text-secondary: #5a6c7d;
+    --text-muted: #8899aa;
+    --border: #e8ecf1;
+    --accent: #c0392b;
+    --accent-light: #e74c3c;
+    --tag-bg: #f0f3f7;
+    --tag-text: #4a6a8a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-hover: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── Header ── */
+  .header {
+    padding: 60px 0 36px;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .header .subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .header .contact {
+    font-size: 16px;
+    color: var(--text);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .header .meta {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .header .meta span { margin: 0 8px; }
+  .header .meta span:first-child { margin-left: 0; }
+
+  /* ── Section Titles ── */
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 48px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .section-title .count {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-left: auto;
+  }
+
+  /* ── Project Cards ── */
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    gap: 18px;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
+  }
+
+  .project-card.no-link {
+    cursor: default;
+  }
+
+  .project-card .thumb {
+    flex-shrink: 0;
+    width: 140px;
+    height: 90px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .project-card .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .project-card .thumb .thumb-label {
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    line-height: 1.3;
+    padding: 0 6px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .project-card .thumb.placeholder {
+    color: rgba(255,255,255,0.6);
+  }
+
+  .project-card .info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .project-card .info .name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .project-card .info .name .badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .project-card .info .name .badge.gray {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+  }
+
+  .project-card .info .desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+
+  .project-card .info .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .project-card .info .tag {
+    font-size: 11px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 2px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .project-card .arrow {
+    flex-shrink: 0;
+    color: var(--text-muted);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    padding-left: 8px;
+  }
+
+  .project-card:hover .arrow {
+    opacity: 1;
+  }
+
+  /* ── 美术作品集展开卡片 ── */
+  .art-expand {
+    cursor: pointer;
+    display: block;
+  }
+
+  .art-expand summary {
+    display: flex;
+    gap: 18px;
+    padding: 20px;
+    list-style: none;
+    cursor: pointer;
+    align-items: center;
+  }
+
+  .art-expand summary::-webkit-details-marker { display: none; }
+
+  .art-expand summary::marker { display: none; content: none; }
+
+  .art-expand[open] summary .arrow {
+    transform: rotate(180deg);
+  }
+
+  .art-expand .art-detail {
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .art-sub {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    align-items: flex-start;
+  }
+
+  .art-sub + .art-sub {
+    border-top: 1px solid var(--border);
+  }
+
+  .art-sub .art-thumb {
+    flex-shrink: 0;
+    width: 100px;
+    height: 64px;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #f0f3f7;
+  }
+
+  .art-sub .art-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .art-sub .art-info .art-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .art-sub .art-info .art-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ── 子项可展开 ── */
+  .art-sub-expand {
+    display: block;
+    padding: 14px 0;
+  }
+
+  .art-sub-expand + .art-sub-expand {
+    border-top: 1px solid var(--border);
+  }
+
+  .art-sub-expand summary {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    list-style: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .art-sub-expand summary::-webkit-details-marker { display: none; }
+
+  .art-sub-expand .art-preview {
+    padding: 14px 0 0 114px;
+  }
+
+  .art-sub-expand .art-preview video {
+    width: 100%;
+    max-width: 560px;
+    border-radius: 6px;
+    background: #000;
+    outline: none;
+  }
+
+  .art-sub-expand .art-preview video + video {
+    margin-top: 10px;
+  }
+
+  .art-sub-expand .art-preview img {
+    width: 100%;
+    max-width: 560px;
+    border-radius: 6px;
+  }
+
+  .art-sub-expand .art-preview img + img {
+    margin-top: 10px;
+  }
+
+  .art-sub-expand summary .expand-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ── Game Experience ── */
+  .game-exp {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .game-exp summary {
+    padding: 16px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .game-exp summary::-webkit-details-marker { display: none; }
+
+  .game-exp summary .toggle-icon {
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+  }
+
+  .game-exp[open] summary .toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  .game-exp .content {
+    padding: 0 24px 20px;
+  }
+
+  .game-category {
+    margin-bottom: 14px;
+  }
+
+  .game-category .cat-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .game-category .game-list {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .game-category .game-list b {
+    color: var(--text);
+  }
+
+  .game-stats {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .game-stats span b {
+    color: var(--text-secondary);
+  }
+
+  .achievements {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #fef9f7;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .achievements b {
+    color: var(--accent);
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 40px 0 48px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .footer .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+
+  .footer .contact-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer .contact-links a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .header { padding: 40px 0 24px; }
+    .header h1 { font-size: 26px; }
+
+    .project-card {
+      flex-direction: row;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .project-card .thumb {
+      width: 96px;
+      height: 96px;
+    }
+
+    .project-card .arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ═══════════ Header ═══════════ -->
+  <header class="header">
+    <h1>陈思源</h1>
+    <p class="subtitle">游戏策划 / 项目管理 · 福州大学 2027届 数字媒体技术</p>
+    <p class="contact">📱 13736368679（微信同号）&nbsp;&nbsp;·&nbsp;&nbsp;📧 13736368679@163.com</p>
+    <p class="meta" style="margin-bottom:10px;">
+      <span>策划×PM双视角</span>
+      <span>|</span>
+      <span>UE5 · C++ · Python</span>
+      <span>|</span>
+      <span>累计游戏时长 3000h+</span>
+    </p>
+    <p class="meta" style="font-size:13px; color:var(--text-secondary); max-width:520px; margin:0 auto; line-height:1.7;">
+      本页面为校招求职作品集，包含项目作品、游戏阅历与联系方式。欢迎浏览，期待交流。
+    </p>
+    <p style="margin-top:8px; font-size:13px; color:var(--text-muted);">
+      <a href="https://github.com/christieeliyah" target="_blank" rel="noopener" style="color:var(--text-secondary); text-decoration:none;">GitHub</a> &nbsp;·&nbsp;
+      <a href="https://christieeliyah.github.io" target="_blank" rel="noopener" style="color:var(--text-secondary); text-decoration:none;">作品集首页</a>
+    </p>
+  </header>
+
+  <!-- ═══════════ 项目作品 ═══════════ -->
+  <div class="section-title">
+    项目作品
+    <span class="count">6 项</span>
+  </div>
+  <div class="projects">
+
+    <!-- 1 ── UE5 FPS射击游戏 (NEW with real content) -->
+    <a class="project-card" href="#" target="_blank" rel="noopener">
+      <div class="thumb">
+        <img src="thumbs/fps_game.png" alt="UE5 FPS射击游戏截图">
+      </div>
+      <div class="info">
+        <div class="name">
+          UE5 FPS 射击游戏
+          <span class="badge">★ 主力Demo</span>
+        </div>
+        <div class="desc">基于 UE 5.8 从零搭建的第一人称射击项目。集成 MCX Virtus 步枪完整动画系统（待机/瞄准/射击/换弹/滑铲等 38 套动画），自研 13 种命中表面 VFX（血液/混凝土/玻璃/金属/木头/水等）+ 全套 Foley 音效 + 弹孔贴花系统。Enhanced Input 输入映射、蓝图接口通讯、武器状态机、玩家状态机全套完成。</div>
+        <div class="tags">
+          <span class="tag">UE 5.8</span>
+          <span class="tag">C++ / 蓝图</span>
+          <span class="tag">武器系统</span>
+          <span class="tag">VFX/SFX</span>
+          <span class="tag">Enhanced Input</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <!-- 2 ── OpenGL 射击游戏 -->
+    <a class="project-card" href="#" target="_blank" rel="noopener">
+      <div class="thumb">
+        <img src="thumbs/opengl_shoot.png" alt="OpenGL 射击小游戏引擎画面">
+      </div>
+      <div class="info">
+        <div class="name">OpenGL 射击小游戏</div>
+        <div class="desc">计算机图形学课程设计。基于 C++ 与 OpenGL 从零搭建 3D 第一人称射击游戏。包含完整渲染管线、自写 GLSL Shader（球/枪/粒子/房间/阴影/太阳）、Assimp 模型加载、粒子系统、阴影投射、Phong 光照模型。可执行 Demo 已编译完成。</div>
+        <div class="tags">
+          <span class="tag">C++</span>
+          <span class="tag">OpenGL</span>
+          <span class="tag">GLSL</span>
+          <span class="tag">Assimp</span>
+          <span class="tag">粒子系统</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <!-- 3 ── 艾尔登法环大世界报告 -->
+    <a class="project-card" href="https://christieeliyah.github.io/elden-ring-ecology/" target="_blank" rel="noopener">
+      <div class="thumb">
+        <img src="thumbs/elden_ring.jpg" alt="《艾尔登法环》官方宣传图">
+      </div>
+      <div class="info">
+        <div class="name">《艾尔登法环》大世界生态设计分析报告</div>
+        <div class="desc">从关卡生态、敌兵分布、视觉引导、探索节奏四个维度拆解交界地大世界设计逻辑，附完整交互式地图标注。</div>
+        <div class="tags">
+          <span class="tag">关卡设计</span>
+          <span class="tag">大世界生态</span>
+          <span class="tag">交互式地图</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <!-- 5 ── 明日方舟拆解报告 -->
+    <a class="project-card" href="https://166f273558084f49b23cb78ea23bc82d.tc-nanjing.share.codebuddy.woa.com" target="_blank" rel="noopener">
+      <div class="thumb">
+        <img src="thumbs/arknights_cover.png" alt="《明日方舟》官方主视觉图">
+      </div>
+      <div class="info">
+        <div class="name">《明日方舟》系统深度拆解报告</div>
+        <div class="desc">覆盖养成 / 战斗 / 经济 / 商业化 / 活动运营 / 系统全局 6 大模块，配分层代币流转图与资源循环模型。</div>
+        <div class="tags">
+          <span class="tag">系统策划</span>
+          <span class="tag">经济模型</span>
+          <span class="tag">商业化分析</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <!-- 6 ── GameJam Demo -->
+    <a class="project-card" href="https://www.bilibili.com/video/BV1sa4y1d7wz" target="_blank" rel="noopener">
+      <div class="thumb placeholder" style="background: linear-gradient(135deg, #1b2838, #2a475e);">
+        <span class="thumb-label">48H<br>GJ</span>
+      </div>
+      <div class="info">
+        <div class="name">吉比特 GameJam · 《水滴的奇幻冒险》</div>
+        <div class="desc">48h 极限开发，5 人团队。负责核心玩法设计（吸水变大 / 吐水变小机制）+ 关卡白盒搭建 + 动效。入围决赛并获"潜力游戏奖"。</div>
+        <div class="tags">
+          <span class="tag">GameJam</span>
+          <span class="tag">玩法设计</span>
+          <span class="tag">关卡搭建</span>
+          <span class="tag">获奖</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <!-- 7 ── 美术作品集（像素画 + 3D建模 + AE动效） -->
+    <details class="project-card art-expand" open>
+      <summary>
+        <div class="thumb" style="background: #fafafa;">
+          <img src="thumbs/pixel_red.png" alt="美术作品">
+        </div>
+        <div class="info">
+          <div class="name">
+            美术作品集
+            <span class="badge gray">美术</span>
+          </div>
+          <div class="desc">像素角色动画 · PBR 载具建模 · MG 动效设计</div>
+          <div class="tags">
+            <span class="tag">像素画</span>
+            <span class="tag">3ds Max</span>
+            <span class="tag">After Effects</span>
+            <span class="tag">参赛作品</span>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+
+      <div class="art-detail">
+
+        <!-- AE 动效 -->
+        <details class="art-sub-expand">
+          <summary>
+            <div class="art-thumb">
+              <img src="thumbs/ae_zmd_logo.png" alt="终末地Logo展示动画">
+            </div>
+            <div class="art-info">
+              <div class="art-title">🎬 AE 动效 · Logo 展示与 UI 动效</div>
+              <div class="art-desc">《明日方舟：终末地》Logo 展示动画 · 《英雄联盟手游》匹配确认动效复原</div>
+              <div class="expand-hint">点击展开查看视频 ▼</div>
+            </div>
+          </summary>
+          <div class="art-preview">
+            <video src="videos/zmd_logo.mp4" controls preload="metadata" poster="thumbs/ae_zmd_logo.png">
+              您的浏览器不支持视频播放
+            </video>
+            <video src="videos/LOL匹配.mp4" controls preload="metadata">
+              您的浏览器不支持视频播放
+            </video>
+          </div>
+        </details>
+
+        <!-- 3D 建模 -->
+        <details class="art-sub-expand">
+          <summary>
+            <div class="art-thumb">
+              <img src="thumbs/doro_car.png" alt="doro痛车3D建模">
+            </div>
+            <div class="art-info">
+              <div class="art-title">🔧 3D 建模 · 道具与载具</div>
+              <div class="art-desc">3ds Max 建模。doro 痛车改装建模，以及木桶、斧锤等中世纪风格道具。</div>
+              <div class="expand-hint">点击展开查看大图 ▼</div>
+            </div>
+          </summary>
+          <div class="art-preview">
+            <img src="F:/项目与作品/3d建模/doro痛车/视角1.png" alt="doro痛车渲染图1">
+            <img src="F:/项目与作品/3d建模/doro痛车/视角2.png" alt="doro痛车渲染图2">
+          </div>
+        </details>
+
+        <!-- 像素画 -->
+        <details class="art-sub-expand">
+          <summary>
+            <div class="art-thumb">
+              <img src="thumbs/pixel_red.png" alt="小红帽像素动画">
+            </div>
+            <div class="art-info">
+              <div class="art-title">🎨 像素画 · 小红帽角色动画套件</div>
+              <div class="art-desc">Aseprite 手绘，角色动画（待机 / 行走 / 攻击 / 跳跃）。逐帧绘制、色盘管理。</div>
+              <div class="expand-hint">点击展开查看大图 ▼</div>
+            </div>
+          </summary>
+          <div class="art-preview">
+            <img src="thumbs/pixel/Idle.png" alt="小红帽待机">
+            <img src="thumbs/pixel/Walk.png" alt="小红帽行走">
+            <img src="thumbs/pixel/Run.png" alt="小红帽奔跑">
+            <img src="thumbs/pixel/Jump.png" alt="小红帽跳跃">
+            <img src="thumbs/pixel/Attack_1.png" alt="小红帽攻击1">
+            <img src="thumbs/pixel/Attack_2.png" alt="小红帽攻击2">
+            <img src="thumbs/pixel/Attack_3.png" alt="小红帽攻击3">
+            <img src="thumbs/pixel/Attack_4.png" alt="小红帽攻击4">
+            <img src="thumbs/pixel/Hurt.png" alt="小红帽受伤">
+            <img src="thumbs/pixel/Dead.png" alt="小红帽死亡">
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+  </div>
+
+  <!-- ═══════════ 游戏阅历 ═══════════ -->
+  <div class="section-title">游戏阅历</div>
+  <details class="game-exp" open>
+    <summary>
+      累计 3000h+ · 跨越 12 个品类 · 多款高成就
+      <span class="toggle-icon">▼</span>
+    </summary>
+    <div class="content">
+
+      <div class="game-category">
+        <div class="cat-name">战术射击（FPS）★ 核心品类</div>
+        <div class="game-list">
+          <b>《无畏契约》超凡 · 730h</b> ·
+          <b>《三角洲行动》绝密 KD 1.6（搜打撤 270h / 大战场 50h）</b> ·
+          <b>《Apex英雄》340h</b> ·
+          <b>《守望先锋》240h</b> ·
+          《战地2042》 · 《使命召唤16/18/20》 · 《漫威争锋》
+        </div>
+      </div>
+
+      <div class="game-category">
+        <div class="cat-name">开放世界 / ARPG</div>
+        <div class="game-list">
+          <b>《艾尔登法环》122h</b> ·
+          <b>《赛博朋克2077》122h</b> ·
+          《黑神话·悟空》 · 《荒野大镖客2》 · 《天国拯救2》 · 《死亡岛2》
+        </div>
+      </div>
+
+      <div class="game-category">
+        <div class="cat-name">二次元 / 策略养成</div>
+        <div class="game-list">
+          <b>《明日方舟》2020年老博士 · 长期关注 ★</b> ·
+          《明日方舟·终末地》开服玩家 ·
+          《重返未来1999》 · 《崩坏·星穹铁道》
+        </div>
+      </div>
+
+      <div class="game-category">
+        <div class="cat-name">自走棋 / Roguelike 卡牌</div>
+        <div class="game-list">
+          <b>《云顶之弈》《金铲铲之战》多赛季大师</b> ·
+          <b>《杀戮尖塔1&2》全角色最高难度通关</b> ·
+          《炉石传说》多月传说 · 《小丑牌》 · 《月圆之夜》 · 《土豆兄弟》 · 《雨中冒险2》 · 《风中行者》
+        </div>
+      </div>
+
+      <div class="game-category">
+        <div class="cat-name">MOBA / 英雄竞技</div>
+        <div class="game-list">
+          <b>《英雄联盟》钻石</b> · 《王者荣耀》
+        </div>
+      </div>
+
+      <div class="game-category">
+        <div class="cat-name">PvE 射击 / 合作生存</div>
+        <div class="game-list">
+          《求生之路2》 · 《杀戮空间2》 · 《严阵以待》本体通关 · 《消逝的光芒2》 · 《REPO》
+        </div>
+      </div>
+
+      <div class="game-category">
+        <div class="cat-name">生存沙盒 / 模拟经营</div>
+        <div class="game-list">
+          《幻兽帕鲁》 · 《森林之子》 · 《方舟生存进化》 · 《夜族崛起》 · 《泰拉瑞亚》 · 《冰汽时代2》 · 《yes your grace》1&2
+        </div>
+      </div>
+
+      <div class="game-category">
+        <div class="cat-name">动作冒险 / 互动叙事</div>
+        <div class="game-list">
+          《生化危机4re》 · 《苍翼·混沌效应》 · 《绝对魔权》 · 《底特律·化身为人》 · 《行尸走肉》 · 《我的世界故事模式》
+        </div>
+      </div>
+
+      <div class="game-category">
+        <div class="cat-name">策略 / CRPG / 桌游 / 塔防</div>
+        <div class="game-list">
+          <b>《文明6》322h</b> · 《博德之门3》 · 《沙丘·帝国》 · 《方舟动物园》 · 《王国保卫战全系列》 · 《权力的游戏·凛冬将至》
+        </div>
+      </div>
+
+      <div class="game-category">
+        <div class="cat-name">派对 / 休闲联机</div>
+        <div class="game-list">
+          《房车还在那里》 · 《chained together》 · 《骗子酒吧》 · 《大富翁10》 · 《犹格索托斯的庭院》
+        </div>
+      </div>
+
+      <div class="game-stats">
+        <span>累计时长 <b>3000h+</b></span>
+        <span>覆盖品类 <b>12 个</b></span>
+        <span>FPS/MOBA/RPG/卡牌/策略/模拟经营</span>
+      </div>
+
+      <div class="achievements">
+        <b>🏆 高成就汇总：</b>《无畏契约》<b>超凡</b> · 《三角洲行动》<b>绝密 KD 1.6</b> · 《炉石传说》<b>多月传说</b> · 《云顶之弈》《金铲铲之战》<b>多赛季大师</b> · 《英雄联盟》<b>钻石</b> · 《杀戮尖塔》<b>全角色最高难度通关</b>
+      </div>
+    </div>
+  </details>
+
+  <!-- ═══════════ Footer ═══════════ -->
+  <footer class="footer">
+    <div class="contact-links">
+      <a href="https://github.com/christieeliyah" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:eliyahchen@foxmail.com">Email</a>
+      <a href="https://christieeliyah.github.io" target="_blank" rel="noopener">作品集首页</a>
+    </div>
+    <p>陈思源 · 福州大学数字媒体技术 2027届 · 游戏策划 / 项目管理</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
