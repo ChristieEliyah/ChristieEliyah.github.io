@@ -39,7 +39,6 @@
 - 创建 BP_VIRTUS 突击步枪子类，装配 6 个配件
 - 实现开火逻辑：LineTraceSingle → BreakHitResult → 物理材质判定 → VFX/SFX/弹孔
 - 实现 Hitscan 即时命中检测，Visibility 通道
-- 配置 13 种表面物理材质差异化响应
 - 实现弹壳抛出系统（BP_Casing）：ProjectileMovement + RotatingMovement + 自动销毁
 - 实现枪口闪光特效
 

@@ -531,7 +531,7 @@
             UE5 FPS 射击游戏
             <span class="badge">★ 主力Demo</span>
           </div>
-          <div class="desc">基于 UE 5.8 从零搭建的 FPS 训练靶场 Demo。MCX Virtus 突击步枪 + 38 套动画 + 13 种命中表面响应 + Enhanced Input + 蓝图状态机 + 设计文档。▼ 展开查看设计文档</div>
+          <div class="desc">基于 UE 5.8 从零搭建的 FPS 训练靶场 Demo。MCX Virtus 突击步枪 + 38 套动画 + Enhanced Input + 蓝图状态机 + 设计文档。▼ 展开查看设计文档</div>
           <div class="tags">
             <span class="tag">UE 5.8</span>
             <span class="tag">纯蓝图</span>
@@ -559,7 +559,6 @@
           <ul style="margin:6px 0; padding-left:20px;">
             <li>即时命中（Hitscan）+ 完整击中反馈链路</li>
             <li>开火 / 瞄准 / 换弹 / 弹药管理</li>
-            <li>13 种表面物理材质差异化响应</li>
             <li>分层动画系统（BlendSpace 无缝过渡）</li>
             <li>武器基类 + 蓝图接口，可扩展架构</li>
           </ul>
@@ -570,7 +569,7 @@
             <tr><td style="padding:6px 10px; border:1px solid var(--border);">玩家角色</td><td style="padding:6px 10px; border:1px solid var(--border);">Character → BP_FPSPlayer，5 种移动状态、FOV 切换、鼠标灵敏度控制</td></tr>
             <tr><td style="padding:6px 10px; border:1px solid var(--border);">武器系统</td><td style="padding:6px 10px; border:1px solid var(--border);">BP_WeaponBase 基类 + BP_VIRTUS 突击步枪（300 BLK），弹匣 30 发，射速 600 RPM，换弹 2.5s</td></tr>
             <tr><td style="padding:6px 10px; border:1px solid var(--border);">输入系统</td><td style="padding:6px 10px; border:1px solid var(--border);">6 个 Enhanced Input Action + WASD 鼠标全映射</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);">命中检测</td><td style="padding:6px 10px; border:1px solid var(--border);">LineTrace 射线 → 物理材质判定 → 13 种差异化响应（血液/混凝土/玻璃/金属/木头/水等）</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);">命中检测</td><td style="padding:6px 10px; border:1px solid var(--border);">LineTrace 射线 → 物理材质判定 → 多表面响应（血液/混凝土/玻璃/金属/木头/水等）</td></tr>
             <tr><td style="padding:6px 10px; border:1px solid var(--border);">靶子系统</td><td style="padding:6px 10px; border:1px solid var(--border);">BP_TargetDummy，100 HP，Timeline 击倒动画 + 自动复位</td></tr>
             <tr><td style="padding:6px 10px; border:1px solid var(--border);">动画系统</td><td style="padding:6px 10px; border:1px solid var(--border);">玩家 ABP + 武器 ABP + 2 个 BlendSpace + 换弹 AnimNotify</td></tr>
             <tr><td style="padding:6px 10px; border:1px solid var(--border);">弹壳系统</td><td style="padding:6px 10px; border:1px solid var(--border);">物理抛壳 + 碰撞音效 + 自动销毁</td></tr>
@@ -628,6 +627,19 @@
             <tr><td style="padding:6px 10px; border:1px solid var(--border);"><b>Player / Main</b></td><td style="padding:6px 10px; border:1px solid var(--border);">交互管理类 · 玩家状态机 + 游戏循环</td></tr>
           </table>
 
+          <!-- 实机演示 + 项目结构 -->
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:20px 0 10px;">🎯 实机演示 & 项目结构</p>
+
+          <p style="font-size:13px; color:var(--text); margin:4px 0 8px; font-weight:600;">实机画面（盒子靶场 / AK-47 / 移动小球）</p>
+          <div style="background:#fafafa; border-radius:8px; padding:14px; margin:0 0 18px;">
+            <img src="thumbs/fps_gameplay.jpg" alt="OpenGL 射击小游戏实机画面：盒子靶场、AK-47 武器、移动小球目标、HUD" style="width:100%; border-radius:6px; display:block;">
+          </div>
+
+          <p style="font-size:13px; color:var(--text); margin:4px 0 8px; font-weight:600;">Visual Studio 项目结构（cpp / head 文件清单）</p>
+          <div style="background:#fafafa; border-radius:8px; padding:14px; margin:0 0 8px;">
+            <img src="thumbs/opengl_solution.jpg" alt="Visual Studio 解决方案资源管理器：Shoot Game 项目的 cpp 与 head 文件分布" style="width:100%; border-radius:6px; display:block;">
+          </div>
+
           <!-- 核心能力 -->
           <p style="font-size:15px; font-weight:700; color:var(--text); margin:20px 0 10px;">🎮 已实现核心系统</p>
           <ul style="margin:6px 0 0; padding-left:20px;">
@@ -664,11 +676,11 @@
       </div>
       <div class="info">
         <div class="name">《艾尔登法环》大世界生态设计分析报告</div>
-        <div class="desc">从关卡生态、敌兵分布、视觉引导、探索节奏四个维度拆解交界地大世界设计逻辑，附完整交互式地图标注。</div>
+        <div class="desc">从关卡生态、敌兵分布、视觉引导、探索节奏四个维度拆解交界地大世界设计逻辑。</div>
         <div class="tags">
           <span class="tag">关卡设计</span>
           <span class="tag">大世界生态</span>
-          <span class="tag">交互式地图</span>
+          <span class="tag">探索节奏</span>
         </div>
       </div>
       <div class="arrow">→</div>
@@ -763,7 +775,7 @@
             </div>
             <div class="art-info">
               <div class="art-title">🔧 3D 建模 · 道具与载具</div>
-              <div class="art-desc">3ds Max 建模。doro 痛车改装建模，以及木桶、斧锤等中世纪风格道具。</div>
+              <div class="art-desc">3ds Max 建模。doro 痛车改装建模与材质渲染。</div>
               <div class="expand-hint">点击展开查看大图 ▼</div>
             </div>
           </summary>
