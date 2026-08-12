@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UE5 FPS 射击训练 Demo · 设计文档</title>
+<title>仿COD UE FPS 射击游戏 Demo · 设计文档</title>
 <style>
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -30,951 +30,434 @@
   hr { border: none; border-top: 1px solid #eee; margin: 32px 0; }
   .back { display: inline-block; margin-bottom: 24px; color: #666; text-decoration: none; font-size: 14px; }
   .back:hover { color: #2563eb; }
+  .nav-links { display: flex; gap: 16px; margin-bottom: 24px; font-size: 14px; }
+  .nav-links a { text-decoration: none; }
+  .vision-box { background: #f0f4ff; border-left: 4px solid #2563eb; padding: 16px 20px; margin: 16px 0 24px; border-radius: 4px; font-size: 15px; line-height: 1.9; }
+  .version-table th { background: #e8eaf6; }
+  .version-table .current { background: #e8f5e9; font-weight: 600; }
+  .version-table .target { color: #666; }
+  .warn { color: #c62828; font-weight: 600; }
 </style>
 </head>
 <body>
-<a class="back" href="./">← 返回作品集首页</a>
-<h1>UE5 FPS 射击训练 Demo · 设计文档</h1>
+<a class="back" href="./">&larr;; 返回作品集首页</a>
+<div class="nav-links">
+  <a href="fps-design-doc.html"><strong>设计文档</strong></a>
+  <a href="fps-update-log.html">开发日志</a>
+</div>
+<h1>仿COD UE FPS 射击游戏 Demo · 设计文档</h1>
+
+<div class="vision-box">
+本项目旨在打造一款<strong>手感接近《使命召唤20：现代战争III》（Call of Duty: Modern Warfare III）</strong>的第一人称射击游戏。以 UE 5.8 纯蓝图从零搭建，围绕"射击手感"这一核心命题，构建了涵盖武器操控、移动反馈、命中表现、弹药管理与靶场训练的完整 FPS 原型。实现了全自动 Hitscan 射击、Enhanced Input 全键位映射以及靶场小球即时补位系统，力求在开火响应、视觉冲击与操作流畅度上达到平均射击手感水平。
+</div>
+
 <blockquote>
-<p><strong>项目名称</strong>: FPS 射击训练靶场 Demo<br />
-<strong>引擎版本</strong>: Unreal Engine 5.8<br />
-<strong>开发语言</strong>: 纯蓝图（Blueprint）<br />
-<strong>武器原型</strong>: SIG MCX-VIRTUS 突击步枪（300 BLK）<br />
-<strong>开发周期</strong>: 个人项目<br />
-<strong>文档版本</strong>: v1.0</p>
+<p><strong>项目名称</strong>: 仿COD UE FPS 射击游戏 Demo<br>
+<strong>引擎版本</strong>: Unreal Engine 5.8<br>
+<strong>开发语言</strong>: 纯蓝图（Blueprint）<br>
+<strong>武器原型</strong>: SIG MCX-VIRTUS 突击步枪（300 BLK）<br>
+<strong>开发周期</strong>: 个人项目<br>
+<strong>当前版本</strong>: v0.42</p>
 </blockquote>
-<hr />
-<h2>一、项目概述</h2>
-<h3>1.1 项目定位</h3>
-<p>本项目是一个 <strong>UE5 第一人称射击（FPS）训练靶场 Demo</strong>，参考 COD 系列新手教程关卡的设计思路，构建了一套完整的 FPS 核心战斗系统——包括角色操控、武器射击、击中反馈、靶子交互、动画状态机和 HUD。</p>
-<p>项目采用 <strong>纯蓝图开发</strong>，从第三方资产包（XL_FPSPack）的基础上进行系统化整合与定制，覆盖了从输入层、逻辑层到表现层的完整开发链路。</p>
-<h3>1.2 设计目标</h3>
-<table>
-<thead>
-<tr>
-<th>目标</th>
-<th>说明</th>
-</tr>
-</thead>
+<hr>
+
+<h2>版本规划</h2>
+<table class="version-table">
+<thead><tr><th>版本</th><th>主题</th><th>状态</th></tr></thead>
 <tbody>
-<tr>
-<td><strong>射击手感</strong></td>
-<td>即时命中（Hitscan）+ 完整的击中反馈链路（VFX / SFX / 贴花 / 靶子受击反应）</td>
-</tr>
-<tr>
-<td><strong>武器操作</strong></td>
-<td>开火 / 瞄准（ADS）/ 换弹 / 弹药管理，接近商业 FPS 的操作体验</td>
-</tr>
-<tr>
-<td><strong>多表面响应</strong></td>
-<td>13 种表面物理材质各自产生不同的击中特效、音效、弹孔贴花</td>
-</tr>
-<tr>
-<td><strong>动画融合</strong></td>
-<td>玩家动画与武器动画分层管理，BlendSpace 实现无缝移动过渡</td>
-</tr>
-<tr>
-<td><strong>可扩展架构</strong></td>
-<td>武器基类（BP_WeaponBase）+ 蓝图接口（BI_Fire），支持未来添加新武器</td>
-</tr>
+<tr><td>v0.00</td><td>基准</td><td>—</td></tr>
+<tr><td>v0.1</td><td>3C 开发（角色、相机、操控）</td><td>✅ 已完成</td></tr>
+<tr><td>v0.2</td><td>射击系统开发</td><td>✅ 已完成</td></tr>
+<tr><td>v0.3</td><td>外围系统开发</td><td>✅ 已完成</td></tr>
+<tr><td>v0.4</td><td>靶场初见雏形</td><td>✅ 已完成</td></tr>
+<tr><td>v0.41</td><td>补弹功能</td><td>✅ 已完成</td></tr>
+<tr class="current"><td>v0.42</td><td>增加小球</td><td>✅ 当前版本</td></tr>
+<tr class="target"><td>v1.00</td><td>靶场功能结束（实现大部分 Aimlab 功能）</td><td>🎯 下一目标</td></tr>
+<tr class="target"><td>v2.00</td><td>滑铲 + 蹲下 + COD 战役新手教程白盒</td><td>🎯 远期目标</td></tr>
 </tbody>
 </table>
-<hr />
-<h2>二、核心战斗循环</h2>
-<pre class="codehilite"><code>┌─────────────────────────────────────────────────────┐
-│                    FPS 训练靶场循环                    │
-│                                                       │
-│    [输入]  ──→  [武器开火]  ──→  [射线命中检测]       │
-│     ↑                              ↓                  │
-│     │                    [命中结果拆解]                │
-│     │                       ↓          ↓              │
-│     │               [物理材质判定]   [命中Actor]       │
-│     │                 ↓     ↓          ↓              │
-│     │             [击中VFX] [SFX]   [ApplyDamage]     │
-│     │                 ↓                  ↓            │
-│     │             [弹孔贴花]      [靶子扣血/击倒]      │
-│     │                 ↓                  ↓            │
-│     └────────── [弹药UI更新]  ←  [靶子复位Timeline]   │
-│                                                       │
-│              [弹壳抛出 + 枪口闪光]                     │
-└─────────────────────────────────────────────────────┘
-</code></pre>
+<hr>
 
-<hr />
-<h2>三、系统设计</h2>
+<h2>一、已实现系统总览</h2>
+<p>本项目基于 UE 5.8 纯蓝图开发，从零搭建了一套 FPS 射击原型。目前已实现 <strong>8 个核心系统</strong>，覆盖输入、战斗、反馈、靶场交互全链路。</p>
+
+<h3>1.1 系统清单</h3>
+<table>
+<thead><tr><th>#</th><th>系统</th><th>核心蓝图</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>玩家角色系统</td><td>BP_FPSPlayer</td><td>第一人称角色操控，多种移动状态，FOV 平滑切换</td></tr>
+<tr><td>2</td><td>武器系统</td><td>BP_WeaponBase → BP_VIRTUS</td><td>Hitscan 即时命中，全自动开火，弹匣/备弹管理</td></tr>
+<tr><td>3</td><td>输入系统</td><td>IMC_FPSinput + 7 个 IA</td><td>Enhanced Input 全映射，WASD + 鼠标 + 功能键</td></tr>
+<tr><td>4</td><td>命中反馈系统</td><td>BP_WeaponBase (LineTrace)</td><td>4 种物理材质差异化 VFX/SFX/弹孔贴花</td></tr>
+<tr><td>5</td><td>靶场小球系统</td><td>BP_TargetManager + BP_TargetBall + BP_StartButton</td><td>射击按钮增加小球，打掉即时补位，无上限</td></tr>
+<tr><td>6</td><td>弹药补给系统</td><td>BP_AmmoLoader</td><td>射击补给箱或近身按 F 键补满弹药至 180 发</td></tr>
+<tr><td>7</td><td>动画系统</td><td>ABP_FPSPlayer + ABP_VIRTUS</td><td>双动画蓝图分层管理，BlendSpace 八向移动，AnimNotify 换弹同步</td></tr>
+<tr><td>8</td><td>弹壳系统</td><td>BP_Casing</td><td>物理抛壳 + 碰撞音效 + 自动销毁</td></tr>
+</tbody>
+</table>
+
+<h3>1.2 功能矩阵</h3>
+<table>
+<thead><tr><th>系统</th><th>已实现功能</th></tr></thead>
+<tbody>
+<tr><td>玩家角色</td><td>步行 / 冲刺 / 瞄准移动 · FOV 平滑过渡 · 鼠标灵敏度控制 · BeginPlay 自动生成武器</td></tr>
+<tr><td>武器</td><td>全自动开火 · Hitscan 射线检测 · 弹匣 30 发 + 备弹 180 发 · R 键换弹 · 弹药耗尽禁射 · 枪口闪光</td></tr>
+<tr><td>输入</td><td>开火 / 瞄准 / 移动 / 视角 / 换弹 / 冲刺 / 补弹（F 键）共 7 个 Input Action</td></tr>
+<tr><td>命中反馈</td><td>4 种表面材质判定 · 对应 VFX + SFX + 弹孔贴花 · Cast 链路分发（小球→按钮→弹药箱→环境）</td></tr>
+<tr><td>靶场小球</td><td>射击按钮增加 1 球 · 无上限累加 · 打掉 1 个立即补 1 个 · 管理器位置即生成中心 · SpawnRange 控制范围</td></tr>
+<tr><td>弹药补给</td><td>射击补给箱补满 · F 键近距离补满</td></tr>
+<tr><td>动画</td><td>玩家多状态 BlendSpace · 武器多状态 BlendSpace · 换弹 AnimNotify 同步弹药</td></tr>
+<tr><td>弹壳</td><td>开火抛壳 · 抛物线运动 · 随机旋转 · 落地音效 · 定时销毁</td></tr>
+</tbody>
+</table>
+<hr>
+
+<h2>二、核心玩法</h2>
+<p><strong>当前玩法</strong>：射击靶场小球。射击"增加小球"按钮可向靶场区域添加小球（无上限），每次射击按钮增加 1 个；打掉一个立即补一个，始终保持当前数量。</p>
+<p><strong>v1.00 目标</strong>：实现大部分 Aimlab 的功能。</p>
+<p><strong>v2.00 目标</strong>：加入滑铲、蹲下，以及一个类似于 COD 战役模式开头新手教程的白盒关卡。</p>
+<hr>
+
+<h2>三、系统设计详情</h2>
+
 <h3>3.1 玩家角色系统（BP_FPSPlayer）</h3>
 <p><strong>继承链</strong>: <code>Character</code> → <code>BP_FPSPlayer</code></p>
-<h4>3.1.1 角色组件</h4>
+
+<h4>组件结构</h4>
 <table>
-<thead>
-<tr>
-<th>组件</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
+<thead><tr><th>组件</th><th>类型</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>Camera</td>
-<td>CameraComponent</td>
-<td>FPS 第一人称摄像机</td>
-</tr>
-<tr>
-<td>CharacterMesh0</td>
-<td>SkeletalMeshComponent</td>
-<td>角色手臂模型（SK_Base_Skin）</td>
-</tr>
-<tr>
-<td>CharacterMovement</td>
-<td>CharacterMovementComponent</td>
-<td>移动行为控制</td>
-</tr>
+<tr><td>Camera</td><td>CameraComponent</td><td>FPS 第一人称摄像机</td></tr>
+<tr><td>CharacterMesh0</td><td>SkeletalMeshComponent</td><td>角色手臂模型（SK_Base_Skin）</td></tr>
+<tr><td>CharacterMovement</td><td>CharacterMovementComponent</td><td>移动行为控制</td></tr>
 </tbody>
 </table>
-<h4>3.1.2 核心参数</h4>
+
+<h4>核心参数</h4>
 <table>
-<thead>
-<tr>
-<th>参数</th>
-<th>默认值</th>
-<th>说明</th>
-</tr>
-</thead>
+<thead><tr><th>参数</th><th>默认值</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>Default FOV</td>
-<td>90°</td>
-<td>默认视场角</td>
-</tr>
-<tr>
-<td>Mouse Sensitivity</td>
-<td>1.0</td>
-<td>鼠标灵敏度</td>
-</tr>
-<tr>
-<td>Walk Speed</td>
-<td>265</td>
-<td>步行速度</td>
-</tr>
-<tr>
-<td>ADS Speed</td>
-<td>400</td>
-<td>瞄准移动速度</td>
-</tr>
-<tr>
-<td>Sprint Speed</td>
-<td>600</td>
-<td>冲刺速度</td>
-</tr>
+<tr><td>Default FOV</td><td>100°</td><td>默认视场角</td></tr>
+<tr><td>Mouse Sensitivity</td><td>1.0</td><td>鼠标灵敏度</td></tr>
+<tr><td>Walk Speed</td><td>265</td><td>步行速度</td></tr>
+<tr><td>ADS Speed</td><td>400</td><td>瞄准移动速度</td></tr>
+<tr><td>Sprint Speed</td><td>600</td><td>冲刺速度</td></tr>
 </tbody>
 </table>
-<h4>3.1.3 玩家状态（E_PlayerState 枚举）</h4>
+
+<h4>状态机（E_PlayerState 枚举）</h4>
 <table>
-<thead>
-<tr>
-<th>状态</th>
-<th>说明</th>
-<th>触发条件</th>
-</tr>
-</thead>
+<thead><tr><th>状态</th><th>触发条件</th></tr></thead>
 <tbody>
-<tr>
-<td>Idle</td>
-<td>待机</td>
-<td>无移动输入</td>
-</tr>
-<tr>
-<td>Walk</td>
-<td>步行</td>
-<td>WASD 移动</td>
-</tr>
-<tr>
-<td>Sprint</td>
-<td>冲刺</td>
-<td>左 Shift + 移动</td>
-</tr>
-<tr>
-<td>ADS</td>
-<td>瞄准</td>
-<td>鼠标右键按下</td>
-</tr>
+<tr><td>Idle</td><td>无移动输入</td></tr>
+<tr><td>Walk</td><td>WASD 移动</td></tr>
+<tr><td>Sprint</td><td>左 Shift + 移动</td></tr>
+<tr><td>ADS</td><td>鼠标右键按下</td></tr>
 </tbody>
 </table>
-<h4>3.1.4 核心逻辑</h4>
+
+<h4>核心逻辑</h4>
 <ul>
-<li><strong>FOV 平滑过渡</strong>: 瞄准时使用 <code>FInterpTo</code> 在默认 FOV 和瞄准 FOV 之间插值</li>
-<li><strong>移动速度切换</strong>: 根据 <code>E_PlayerState</code> 切换 <code>CharacterMovement.MaxWalkSpeed</code></li>
-<li><strong>鼠标视角控制</strong>: <code>AddControllerYawInput</code> + <code>AddControllerPitchInput</code></li>
-<li><strong>武器生成</strong>: BeginPlay 时创建 <code>BP_VIRTUS</code> 实例并附加到角色</li>
+<li><strong>FOV 平滑过渡</strong>: 瞄准时 <code>FInterpTo</code> 在默认 FOV 和瞄准 FOV 之间插值</li>
+<li><strong>移动速度切换</strong>: 根据 <code>E_PlayerState</code> 切换 <code>MaxWalkSpeed</code></li>
+<li><strong>武器生成</strong>: BeginPlay 时 Spawn <code>BP_VIRTUS</code> 实例并赋值给 <code>CurrentWeapon</code> 变量</li>
+<li><strong>F 键补弹</strong>: IA_AddAmmo 触发 → Get CurrentWeapon → 调用 AddAmmo 函数</li>
 </ul>
-<hr />
+<hr>
+
 <h3>3.2 武器系统</h3>
+
 <h4>3.2.1 武器基类（BP_WeaponBase）</h4>
-<p><strong>继承链</strong>: <code>Actor</code> → <code>BP_WeaponBase</code><br />
+<p><strong>继承链</strong>: <code>Actor</code> → <code>BP_WeaponBase</code><br>
 <strong>实现接口</strong>: <code>BI_Fire</code></p>
+
 <table>
-<thead>
-<tr>
-<th>核心变量</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
+<thead><tr><th>核心变量</th><th>类型</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>BaseDamage</td>
-<td>Float</td>
-<td>单发基础伤害</td>
-</tr>
-<tr>
-<td>CurrentAmmo</td>
-<td>Int</td>
-<td>当前弹匣内弹药</td>
-</tr>
-<tr>
-<td>MagSize</td>
-<td>Int</td>
-<td>弹匣容量</td>
-</tr>
-<tr>
-<td>TotalAmmo</td>
-<td>Int</td>
-<td>总备弹数</td>
-</tr>
-<tr>
-<td>FireRate</td>
-<td>Float</td>
-<td>射速（发/秒）</td>
-</tr>
-<tr>
-<td>Barrel</td>
-<td>SceneComponent</td>
-<td>枪管 Socket，射线起点</td>
-</tr>
-<tr>
-<td>BulletDecal</td>
-<td>Class</td>
-<td>弹孔贴花蓝图类</td>
-</tr>
+<tr><td>BaseDamage</td><td>Float</td><td>单发基础伤害</td></tr>
+<tr><td>CurrentAmmo</td><td>Int</td><td>当前弹匣内弹药（默认 30）</td></tr>
+<tr><td>MagSize</td><td>Int</td><td>弹匣容量</td></tr>
+<tr><td>TotalAmmo</td><td>Int</td><td>总备弹数（默认 180）</td></tr>
+<tr><td>FireRate</td><td>Float</td><td>射速（发/秒）</td></tr>
+<tr><td>CurrentWeapon</td><td>Object Ref</td><td>当前武器实例引用</td></tr>
+<tr><td>Barrel</td><td>SceneComponent</td><td>枪管 Socket，枪口闪光/弹壳生成位置</td></tr>
 </tbody>
 </table>
+
+<h4>开火逻辑（LineTrace → Cast 链路）</h4>
+<pre><code>LineTraceSingle (Visibility 通道)
+  起点: 摄像机位置
+  终点: 摄像机前向 × 10000
+  → Is Valid (HitResult 有效?)
+    → Is Valid: 击中音效/特效
+      → Cast To BP_TargetBall
+        ├─ Succeeded → Hit() → 销毁球 + 补球
+        └─ Failed → Cast To BP_StartButton
+          ├─ Succeeded → Hit() → 增加小球
+          └─ Failed → Cast To BP_AmmoLoader
+            ├─ Succeeded → Hit() → Set TotalAmmo(180) + 更新UI
+            └─ Failed → 环境命中特效（VFX/SFX/弹孔）</code></pre>
+
 <h4>3.2.2 MCX-VIRTUS 突击步枪（BP_VIRTUS）</h4>
 <p><strong>继承链</strong>: <code>BP_WeaponBase</code> → <code>BP_VIRTUS</code></p>
-<p><strong>武器配件</strong>: 已装配至武器网格，使用 SceneComponent 定位</p>
 <table>
-<thead>
-<tr>
-<th>配件</th>
-<th>说明</th>
-</tr>
-</thead>
+<thead><tr><th>配件</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>300-BACKOUT 弹匣</td>
-<td>30 发 .300 BLK 弹匣</td>
-</tr>
-<tr>
-<td>DMR-X 枪管</td>
-<td>长枪管，提升精度</td>
-</tr>
-<tr>
-<td>MCX-VIRTUS Close XSights</td>
-<td>机械瞄具</td>
-</tr>
-<tr>
-<td>Sig Sauer Romeo3</td>
-<td>红点瞄准镜</td>
-</tr>
-<tr>
-<td>MCX Stock</td>
-<td>可调节枪托</td>
-</tr>
-<tr>
-<td>CQB 垂直握把</td>
-<td>提升操控性</td>
-</tr>
+<tr><td>300-BACKOUT 弹匣</td><td>30 发 .300 BLK 弹匣</td></tr>
+<tr><td>DMR-X 枪管</td><td>长枪管，提升精度</td></tr>
+<tr><td>MCX-VIRTUS Close XSights</td><td>机械瞄具</td></tr>
+<tr><td>Sig Sauer Romeo3</td><td>红点瞄准镜</td></tr>
 </tbody>
 </table>
-<p><strong>动画</strong>: 玩家侧 38 个动画 + 武器侧 37 个动画（Idle / Walk / ADS / Sprint / Fire / Reload / Draw / Holster / Slide）</p>
-<p><strong>音效</strong>: 21 个开火音频变体 + 11 个拟音音效（Draw / Holster / Reload / Sprint / ADS 过渡）</p>
-<hr />
+<hr>
+
 <h3>3.3 输入系统（Enhanced Input）</h3>
 <table>
-<thead>
-<tr>
-<th>输入动作</th>
-<th>按键</th>
-<th>触发方式</th>
-<th>功能</th>
-</tr>
-</thead>
+<thead><tr><th>输入动作</th><th>按键</th><th>触发方式</th><th>功能</th></tr></thead>
 <tbody>
-<tr>
-<td>IA_Fire</td>
-<td>鼠标左键</td>
-<td>Started</td>
-<td>开火</td>
-</tr>
-<tr>
-<td>IA_Aim</td>
-<td>鼠标右键</td>
-<td>Triggered</td>
-<td>瞄准（ADS）</td>
-</tr>
-<tr>
-<td>IA_Move</td>
-<td>W/A/S/D</td>
-<td>Continuous</td>
-<td>角色移动</td>
-</tr>
-<tr>
-<td>IA_Look</td>
-<td>Mouse2D</td>
-<td>Continuous</td>
-<td>视角旋转（含轴交换 + 取反修饰器）</td>
-</tr>
-<tr>
-<td>IA_Reload</td>
-<td>R</td>
-<td>Triggered</td>
-<td>换弹</td>
-</tr>
-<tr>
-<td>IA_Run</td>
-<td>左 Shift</td>
-<td>Started</td>
-<td>冲刺</td>
-</tr>
+<tr><td>IA_Fire</td><td>鼠标左键</td><td>Started</td><td>开火</td></tr>
+<tr><td>IA_Aim</td><td>鼠标右键</td><td>Triggered</td><td>瞄准（ADS）</td></tr>
+<tr><td>IA_Move</td><td>W/A/S/D</td><td>Continuous</td><td>角色移动</td></tr>
+<tr><td>IA_Look</td><td>Mouse2D</td><td>Continuous</td><td>视角旋转</td></tr>
+<tr><td>IA_Reload</td><td>R</td><td>Triggered</td><td>换弹</td></tr>
+<tr><td>IA_Run</td><td>左 Shift</td><td>Started</td><td>冲刺</td></tr>
+<tr><td>IA_AddAmmo</td><td>F</td><td>Started</td><td>近身补弹</td></tr>
 </tbody>
 </table>
-<p><strong>输入映射</strong>: <code>IMC_FPSinput</code> 统一管理，优先级最高，在 <code>BP_FPSPlayer.BeginPlay</code> 时挂载。</p>
-<hr />
+<p><strong>输入映射</strong>: <code>IMC_FPSinput</code> 统一管理，BeginPlay 时挂载。</p>
+<hr>
+
 <h3>3.4 命中检测与反馈系统</h3>
-<h4>3.4.1 射线检测（LineTrace）</h4>
+<h4>射线检测参数</h4>
 <table>
-<thead>
-<tr>
-<th>参数</th>
-<th>值</th>
-</tr>
-</thead>
+<thead><tr><th>参数</th><th>值</th></tr></thead>
 <tbody>
-<tr>
-<td>起点</td>
-<td>枪管 Barrel 组件的世界位置</td>
-</tr>
-<tr>
-<td>终点</td>
-<td>起点 + 摄像机前向 × 10000</td>
-</tr>
-<tr>
-<td>通道</td>
-<td>Visibility / Camera</td>
-</tr>
-<tr>
-<td>输出</td>
-<td>HitResult（命中点 / 命中 Actor / 命中组件 / 物理材质）</td>
-</tr>
+<tr><td>起点</td><td>摄像机世界位置</td></tr>
+<tr><td>终点</td><td>起点 + 摄像机前向 × 10000</td></tr>
+<tr><td>通道</td><td>Visibility</td></tr>
+<tr><td>输出</td><td>HitResult（命中点 / Actor / 组件 / 物理材质）</td></tr>
 </tbody>
 </table>
-<h4>3.4.2 表面材质响应表（13 种）</h4>
-<p>每发子弹命中后，根据被命中表面的物理材质（Physical Material）匹配对应的反馈：</p>
+
+<h4>表面材质响应表（4 种）</h4>
 <table>
-<thead>
-<tr>
-<th>表面材质</th>
-<th>击中 VFX</th>
-<th>击中 SFX</th>
-<th>弹孔贴花</th>
-</tr>
-</thead>
+<thead><tr><th>表面材质</th><th>击中 VFX</th><th>击中 SFX</th><th>弹孔贴花</th></tr></thead>
 <tbody>
-<tr>
-<td>混凝土</td>
-<td>FX_SquibConcrete</td>
-<td>SFX_Concrete_Cue</td>
-<td>MI_BulletDecal_Concrete</td>
-</tr>
-<tr>
-<td>泥土</td>
-<td>FX_SquibDirt</td>
-<td>SFX_Dirt_Cue</td>
-<td>默认弹孔</td>
-</tr>
-<tr>
-<td>金属</td>
-<td>FX_SquibMetal</td>
-<td>SFX_Metal_Cue</td>
-<td>MI_BulletDecal_Metal</td>
-</tr>
-<tr>
-<td>木头</td>
-<td>FX_SquibWood</td>
-<td>SFX_Wood_Cue</td>
-<td>MI_BulletDecal_Wood</td>
-</tr>
-<tr>
-<td>岩石</td>
-<td>FX_SquibRock</td>
-<td>SFX_Rock_Cue</td>
-<td>MI_BulletDecal_Rock</td>
-</tr>
-<tr>
-<td>布料</td>
-<td>FX_SquibFabric</td>
-<td>SFX_Fabric_Cue</td>
-<td>MI_BulletDecal_Fabric</td>
-</tr>
-<tr>
-<td>玻璃</td>
-<td>FX_SquibGlass</td>
-<td>SFX_Glass_Cue</td>
-<td>MI_BulletDecal_Glass</td>
-</tr>
-<tr>
-<td>沙地</td>
-<td>FX_SquibSand</td>
-<td>SFX_Sand_Cue</td>
-<td>默认弹孔</td>
-</tr>
-<tr>
-<td>雪地</td>
-<td>FX_SquibSnow</td>
-<td>SFX_Snow_Cue</td>
-<td>默认弹孔</td>
-</tr>
-<tr>
-<td>水面</td>
-<td>FX_SquibWater</td>
-<td>SFX_Water_Cue</td>
-<td>—</td>
-</tr>
-<tr>
-<td>泥浆</td>
-<td>FX_SquibMud</td>
-<td>SFX_Mud_Cue</td>
-<td>默认弹孔</td>
-</tr>
-<tr>
-<td>树篱</td>
-<td>FX_SquibHedge</td>
-<td>SFX_Hedge_Cue</td>
-<td>默认弹孔</td>
-</tr>
-<tr>
-<td>血液</td>
-<td>Impact_Blood / FX_SquibBlood</td>
-<td>—</td>
-<td>—</td>
-</tr>
+<tr><td>混凝土</td><td>FX_SquibConcrete</td><td>SFX_Concrete_Cue</td><td>MI_BulletDecal_Concrete</td></tr>
+<tr><td>泥土</td><td>FX_SquibDirt</td><td>SFX_Dirt_Cue</td><td>默认弹孔</td></tr>
+<tr><td>金属</td><td>FX_SquibMetal</td><td>SFX_Metal_Cue</td><td>MI_BulletDecal_Metal</td></tr>
+<tr><td>木头</td><td>FX_SquibWood</td><td>SFX_Wood_Cue</td><td>MI_BulletDecal_Wood</td></tr>
 </tbody>
 </table>
-<h4>3.4.3 伤害系统</h4>
+<hr>
+
+<h3>3.5 靶场小球系统</h3>
+<h4>系统架构</h4>
 <table>
-<thead>
-<tr>
-<th>参数</th>
-<th>值</th>
-</tr>
-</thead>
+<thead><tr><th>蓝图</th><th>角色</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>伤害类型</td>
-<td>ApplyDamage（GameplayStatics）</td>
-</tr>
-<tr>
-<td>伤害值</td>
-<td>BaseDamage（武器基类变量）</td>
-</tr>
-<tr>
-<td>伤害对象</td>
-<td>命中 HitActor（如 BP_TargetDummy）</td>
-</tr>
+<tr><td>BP_StartButton</td><td>增加小球按钮</td><td>被射击时调用 Manager.SpawnOneBall()，每次增加 1 球</td></tr>
+<tr><td>BP_TargetManager</td><td>管理器</td><td>负责生成小球，位置即生成中心</td></tr>
+<tr><td>BP_TargetBall</td><td>靶标</td><td>被射击时销毁自身 + 通知 Manager 补球</td></tr>
 </tbody>
 </table>
-<hr />
-<h3>3.5 靶子系统（BP_TargetDummy）</h3>
-<h4>3.5.1 组件结构</h4>
+
+<h4>BP_TargetManager</h4>
 <table>
-<thead>
-<tr>
-<th>组件</th>
-<th>说明</th>
-</tr>
-</thead>
+<thead><tr><th>变量</th><th>类型</th><th>默认值</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>Cube（身体）</td>
-<td>引擎基础 Cube，作为主体碰撞体</td>
-</tr>
-<tr>
-<td>head（头部网格）</td>
-<td>自定义头部模型</td>
-</tr>
-<tr>
-<td>headcube</td>
-<td>头部碰撞体</td>
-</tr>
-</tbody>
-</table>
-<h4>3.5.2 核心逻辑</h4>
-<table>
-<thead>
-<tr>
-<th>变量</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Health</td>
-<td>Int</td>
-<td>当前生命值</td>
-</tr>
-<tr>
-<td>Bisdown</td>
-<td>Bool</td>
-<td>是否已倒地</td>
-</tr>
-<tr>
-<td>resettime</td>
-<td>Float</td>
-<td>击倒后自动复位时间</td>
-</tr>
+<tr><td>SpawnRange</td><td>Float</td><td>500</td><td>生成范围半径（可编辑）</td></tr>
+<tr><td>Score</td><td>Integer</td><td>0</td><td>得分</td></tr>
+<tr><td>ElapsedTime</td><td>Float</td><td>0</td><td>计时秒数</td></tr>
 </tbody>
 </table>
 <table>
-<thead>
-<tr>
-<th>事件</th>
-<th>说明</th>
-</tr>
-</thead>
+<thead><tr><th>函数</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>Event AnyDamage</td>
-<td>接收武器 ApplyDamage，扣血 + 判断倒地</td>
-</tr>
-<tr>
-<td>ShootFallDown</td>
-<td>Timeline 驱动倒下动画（RelativeRotation 0°→90°，随机方向）</td>
-</tr>
-<tr>
-<td>TL_reset</td>
-<td>自动复位 Timeline（90°→0°）</td>
-</tr>
+<tr><td>SpawnOneBall</td><td>GetActorLocation + RandomUnitVector × SpawnRange → SpawnActor(BP_TargetBall)</td></tr>
+<tr><td>AddScore</td><td>Score + 1 → 更新分数显示</td></tr>
 </tbody>
 </table>
-<p><strong>击倒流程</strong>: 中弹 → AnyDamage → Health ≤ 0 → TL_falldown（0.3s 倒下）→ 等待 resettime → TL_reset（0.3s 立起）</p>
-<hr />
-<h3>3.6 动画系统</h3>
-<h4>3.6.1 玩家动画蓝图（ABP_FPSPlayer）</h4>
-<p><strong>骨骼</strong>: <code>Skeleton_Base</code>（XL_FPSPack 手臂骨骼）</p>
-<p><strong>状态机</strong>: 5 个动画状态，基于 <code>E_PlayerState</code> 和移动速度驱动过渡</p>
+
+<h4>BP_TargetBall</h4>
 <table>
-<thead>
-<tr>
-<th>状态</th>
-<th>动画/混合</th>
-<th>说明</th>
-</tr>
-</thead>
+<thead><tr><th>函数</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>Idle/Walk</td>
-<td>BS_FPSPlayer + Player_Idle</td>
-<td>2D BlendSpace 驱动待机↔八向移动</td>
-</tr>
-<tr>
-<td>ADS Idle</td>
-<td>Player_ADS_Idle</td>
-<td>瞄准待机</td>
-</tr>
-<tr>
-<td>ADS Walk</td>
-<td>Player_ADS_Walk</td>
-<td>瞄准移动</td>
-</tr>
-<tr>
-<td>Sprint</td>
-<td>Player_Sprint</td>
-<td>冲刺动画</td>
-</tr>
+<tr><td>Hit</td><td>Get All Actors → Get(0) → SpawnOneBall() → AddScore() → DestroyActor(Self)</td></tr>
 </tbody>
 </table>
-<p><strong>过渡条件</strong>: <code>E_PlayerState</code> 枚举 + Velocity.Length &gt; 0 + ADS Socket 位置判断</p>
-<h4>3.6.2 武器动画蓝图（ABP_VIRTUS）</h4>
+
+<h4>BP_StartButton</h4>
+<table>
+<thead><tr><th>函数</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>Hit</td><td>Get All Actors → Get(0) → SpawnOneBall() → PrintString("增加小球")</td></tr>
+</tbody>
+</table>
+
+<h4>执行流程</h4>
+<pre><code>射击 BP_StartButton → Manager.SpawnOneBall()  ← 增加 1 个球
+  （每次射击按钮增加 1 球，无上限累加）
+
+射击 BP_TargetBall → Hit()
+  → Manager.SpawnOneBall()  ← 立即补 1 个
+  → Manager.AddScore()      ← 加 1 分
+  → Destroy Actor (Self)    ← 销毁自己
+
+例：射击按钮 3 次 → 场上 3 个球 → 打掉 1 个立即补 1 个 → 始终保持 3 个</code></pre>
+<hr>
+
+<h3>3.6 弹药补给系统（BP_AmmoLoader）</h3>
+<p class="warn">⚠️ 外观组件（StaticMesh / Text Render）尚未接入，当前仅功能逻辑可用。</p>
+
+<h4>补弹方式</h4>
+<table>
+<thead><tr><th>方式</th><th>触发条件</th><th>逻辑</th></tr></thead>
+<tbody>
+<tr><td>射击补给箱</td><td>LineTrace 命中 BP_AmmoLoader</td><td>Hit() → Set TotalAmmo(180) → 更新 UI</td></tr>
+<tr><td>F 键补弹</td><td>玩家近身按 F</td><td>IA_AddAmmo → Get CurrentWeapon → AddAmmo() → Set CurrentAmmo(30) + TotalAmmo(180) → 更新 UI</td></tr>
+</tbody>
+</table>
+
+<h4>关键实现</h4>
+<ul>
+<li><strong>AddAmmo 必须是 Function 不是 Custom Event</strong>：跨蓝图调用只能用 Function</li>
+<li><strong>Target 引脚连 CurrentWeapon 变量</strong>，不是 Weapon 变量</li>
+<li>补弹后调用 <code>updateweaponinfo</code> 刷新 HUD</li>
+</ul>
+<hr>
+
+<h3>3.7 动画系统</h3>
+<h4>3.7.1 玩家动画蓝图（ABP_FPSPlayer）</h4>
+<p><strong>骨骼</strong>: <code>Skeleton_Base</code></p>
+<table>
+<thead><tr><th>状态</th><th>动画/混合</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>Idle/Walk</td><td>BS_FPSPlayer + Player_Idle</td><td>2D BlendSpace 驱动待机↔八向移动</td></tr>
+<tr><td>ADS Idle</td><td>Player_ADS_Idle</td><td>瞄准待机</td></tr>
+<tr><td>ADS Walk</td><td>Player_ADS_Walk</td><td>瞄准移动</td></tr>
+<tr><td>Sprint</td><td>Player_Sprint</td><td>冲刺动画</td></tr>
+</tbody>
+</table>
+<p><strong>过渡条件</strong>: <code>E_PlayerState</code> 枚举 + Velocity.Length > 0 + ADS Socket 位置判断</p>
+
+<h4>3.7.2 武器动画蓝图（ABP_VIRTUS）</h4>
 <p><strong>骨骼</strong>: <code>MCX-VIRTUS_Skeleton</code></p>
 <table>
-<thead>
-<tr>
-<th>状态</th>
-<th>动画/混合</th>
-<th>说明</th>
-</tr>
-</thead>
+<thead><tr><th>状态</th><th>动画/混合</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>Idle/Walk</td>
-<td>BS_VIRTUS + Weapon_Idle</td>
-<td>武器 2D BlendSpace</td>
-</tr>
-<tr>
-<td>ADS</td>
-<td>Weapon_ADS_Idle + Weapon_ADS_Walk</td>
-<td>武器瞄准状态</td>
-</tr>
-<tr>
-<td>Sprint</td>
-<td>Weapon_Sprint</td>
-<td>武器冲刺动画</td>
-</tr>
+<tr><td>Idle/Walk</td><td>BS_VIRTUS + Weapon_Idle</td><td>武器 2D BlendSpace</td></tr>
+<tr><td>ADS</td><td>Weapon_ADS_Idle + Weapon_ADS_Walk</td><td>武器瞄准状态</td></tr>
+<tr><td>Sprint</td><td>Weapon_Sprint</td><td>武器冲刺动画</td></tr>
 </tbody>
 </table>
-<h4>3.6.3 换弹动画通知（AN_Reload）</h4>
-<p><code>AN_Reload</code> 是一个自定义 AnimNotify，在换弹蒙太奇的关键帧触发，执行以下逻辑：
-1. 获取武器 BP_WeaponBase 引用
-2. 计算装填量：<code>Min(MagSize - CurrentAmmo, TotalAmmo)</code>
-3. 更新 <code>CurrentAmmo</code> 和 <code>TotalAmmo</code>
-4. 调用 <code>UI_MainUI.updateweaponinfo</code> 刷新 HUD</p>
-<hr />
-<h3>3.7 弹壳系统（BP_Casing）</h3>
-<table>
-<thead>
-<tr>
-<th>组件</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Casing (StaticMesh)</td>
-<td>7.62×39mm 弹壳模型（SM_7_62x39MM）</td>
-</tr>
-<tr>
-<td>ProjectileMovement</td>
-<td>抛物线运动（InitialSpeed + Gravity）</td>
-</tr>
-<tr>
-<td>RotatingMovement</td>
-<td>随机旋转速率</td>
-</tr>
-</tbody>
-</table>
-<p><strong>生命周期</strong>: 开火时生成 → 弹壳飞行 → 碰撞地面 → 播放 <code>Bullet_Impact</code> 音效 → <code>InitialLifeSpan</code> 到时后自动销毁</p>
-<hr />
-<h3>3.8 HUD 系统（UI_MainUI）</h3>
-<p><strong>弹药显示格式</strong>: <code>当前弹药 / 总备弹</code></p>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>updateweaponinfo(current, total)</td>
-<td>武器弹药变化时由 AN_Reload / 开火逻辑调用</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2>四、蓝图接口（BI_Fire）</h2>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>说明</th>
-<th>实现方</th>
-<th>调用方</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>StartWeaponFire</td>
-<td>触发武器开火</td>
-<td>BP_WeaponBase</td>
-<td>BP_FPSPlayer（IA_Fire 输入回调）</td>
-</tr>
-</tbody>
-</table>
-<p>设计意图：通过蓝图接口解耦玩家输入和武器开火逻辑，未来新增武器类型时只需实现 <code>BI_Fire</code> 接口即可无缝接入。</p>
-<hr />
-<h2>五、游戏模式（BP_FPSGameMode）</h2>
-<table>
-<thead>
-<tr>
-<th>配置项</th>
-<th>值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>DefaultPawnClass</td>
-<td>BP_FPSPlayer</td>
-</tr>
-<tr>
-<td>HUD Class</td>
-<td>默认（UI 由 BP_FPSPlayer 自行创建）</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2>六、关卡设计</h2>
-<h3>6.1 现有关卡</h3>
-<ul>
-<li><strong>Untitled.umap</strong>: 单一训练关卡，包含 141 个场景 Actor</li>
-</ul>
-<h3>6.2 靶场训练流程（规划中）</h3>
-<p>参考 COD 新手教程的 5 站训练流程（详见 <code>UE5射击Demo_靶场关卡设计文档.md</code>）：</p>
-<table>
-<thead>
-<tr>
-<th>站号</th>
-<th>训练内容</th>
-<th>关卡目标</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第 1 站</td>
-<td>基础射击</td>
-<td>熟悉武器开火 + 后坐力</td>
-</tr>
-<tr>
-<td>第 2 站</td>
-<td>移动射击</td>
-<td>边移动边射击移动靶</td>
-</tr>
-<tr>
-<td>第 3 站</td>
-<td>掩体切换</td>
-<td>快速切掩体 + 预判射击</td>
-</tr>
-<tr>
-<td>第 4 站</td>
-<td>多目标压制</td>
-<td>同时处理多个靶子</td>
-</tr>
-<tr>
-<td>第 5 站</td>
-<td>综合考核</td>
-<td>时间限制 + 精度评级</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2>七、技术架构总结</h2>
-<pre class="codehilite"><code>┌──────────────────────────────────────────────────┐
-│                   关卡层                           │
-│              Untitled.umap (141 Actors)            │
-├──────────────────────────────────────────────────┤
-│                   GameMode 层                      │
-│     BP_FPSGameMode → BP_FPSPlayer (DefaultPawn)   │
-├──────────────┬──────────────┬─────────────────────┤
-│   输入层     │   武器层      │   反馈层             │
-│  Enhanced    │ BP_WeaponBase│  ShotSystem (139)    │
-│  Input       │  → BP_VIRTUS │  ├ VFX (13 种表面)   │
-│  ├ IA_Fire   │  ├ LineTrace │  ├ SFX (13 种表面)   │
-│  ├ IA_Aim    │  ├ 材质判定   │  ├ Decals (7 种)     │
-│  ├ IA_Move   │  ├ 弹壳抛出   │  └ Casing (物理)    │
-│  ├ IA_Look   │  └ 枪口闪光   │                     │
-│  ├ IA_Reload │              │  BP_TargetDummy      │
-│  └ IA_Run    │              │  ├ 生命值 + 倒地     │
-│              │              │  ├ Timeline 动画     │
-│              │              │  └ 自动复位          │
-├──────────────┴──────────────┴─────────────────────┤
-│                   动画与表现层                       │
-│   ABP_FPSPlayer (玩家)  │  ABP_VIRTUS (武器)        │
-│   BS_FPSPlayer          │  BS_VIRTUS               │
-│   AN_Reload (通知)      │  蒙太奇系统               │
-├───────────────────────────────────────────────────┤
-│                    UI 层                            │
-│   UI_MainUI (弹药 HUD)                             │
-│   └ updateweaponinfo(current, total)               │
-└───────────────────────────────────────────────────┘
-</code></pre>
 
-<hr />
-<h2>八、关键数据表</h2>
-<h3>8.1 武器数值</h3>
+<h4>3.7.3 换弹动画通知（AN_Reload）</h4>
+<p><code>AN_Reload</code> 在换弹蒙太奇关键帧触发：</p>
+<ol>
+<li>获取武器 BP_WeaponBase 引用</li>
+<li>计算装填量：<code>Min(MagSize - CurrentAmmo, TotalAmmo)</code></li>
+<li>更新 <code>CurrentAmmo</code> 和 <code>TotalAmmo</code></li>
+<li>调用 <code>UI_MainUI.updateweaponinfo</code> 刷新 HUD</li>
+</ol>
+<hr>
+
+<h3>3.8 弹壳系统（BP_Casing）</h3>
 <table>
-<thead>
-<tr>
-<th>参数</th>
-<th>值</th>
-</tr>
-</thead>
+<thead><tr><th>组件</th><th>说明</th></tr></thead>
 <tbody>
-<tr>
-<td>武器名称</td>
-<td>SIG MCX-VIRTUS</td>
-</tr>
-<tr>
-<td>口径</td>
-<td>.300 BLK</td>
-</tr>
-<tr>
-<td>基础伤害</td>
-<td>BaseDamage（蓝图可调）</td>
-</tr>
-<tr>
-<td>弹匣容量</td>
-<td>30 发</td>
-</tr>
-<tr>
-<td>射速</td>
-<td>FireRate（蓝图可调）</td>
-</tr>
-<tr>
-<td>有效射程</td>
-<td>10000 UE 单位</td>
-</tr>
-<tr>
-<td>射击模式</td>
-<td>全自动</td>
-</tr>
-<tr>
-<td>换弹时间</td>
-<td>约 2.5s（空仓）/ 约 2.0s（战术）</td>
-</tr>
+<tr><td>Casing (StaticMesh)</td><td>7.62×39mm 弹壳模型</td></tr>
+<tr><td>ProjectileMovement</td><td>抛物线运动（InitialSpeed + Gravity）</td></tr>
+<tr><td>RotatingMovement</td><td>随机旋转速率</td></tr>
 </tbody>
 </table>
-<h3>8.2 移动数值</h3>
+<p><strong>生命周期</strong>: 开火生成 → 飞行 → 碰撞地面播放音效 → InitialLifeSpan 自动销毁</p>
+<hr>
+
+<h3>3.9 蓝图接口（BI_Fire）</h3>
 <table>
-<thead>
-<tr>
-<th>状态</th>
-<th>速度（UE单位/秒）</th>
-<th>FOV</th>
-</tr>
-</thead>
+<thead><tr><th>函数</th><th>实现方</th><th>调用方</th></tr></thead>
 <tbody>
-<tr>
-<td>步行</td>
-<td>265</td>
-<td>90°</td>
-</tr>
-<tr>
-<td>瞄准移动</td>
-<td>400</td>
-<td>待定</td>
-</tr>
-<tr>
-<td>冲刺</td>
-<td>600</td>
-<td>90°</td>
-</tr>
+<tr><td>StartWeaponFire</td><td>BP_WeaponBase</td><td>BP_FPSPlayer（IA_Fire 回调）</td></tr>
 </tbody>
 </table>
-<h3>8.3 资产统计</h3>
+<p>设计意图：解耦玩家输入和武器开火逻辑，新增武器只需实现 <code>BI_Fire</code> 接口。</p>
+<hr>
+
+<h2>四、技术架构</h2>
+<pre><code>┌──────────────────────────────────────────────────────┐
+│                     关卡层                            │
+│                Untitled.umap                          │
+├──────────────────────────────────────────────────────┤
+│                    GameMode 层                        │
+│       BP_FPSGameMode → BP_FPSPlayer (DefaultPawn)    │
+├──────────────┬───────────────┬───────────────────────┤
+│   输入层      │    武器层      │     反馈层             │
+│  Enhanced    │ BP_WeaponBase │  ShotSystem            │
+│  Input       │  → BP_VIRTUS  │  ├ VFX (4 种表面)     │
+│  ├ IA_Fire   │  ├ LineTrace  │  ├ SFX (4 种表面)     │
+│  ├ IA_Aim    │  ├ Cast 链路   │  ├ Decals             │
+│  ├ IA_Move   │  ├ 弹壳抛出    │  └ Casing (物理)     │
+│  ├ IA_Look   │  └ 枪口闪光    │                      │
+│  ├ IA_Reload │               │  靶场系统             │
+│  ├ IA_Run    │               │  ├ BP_TargetManager   │
+│  └ IA_AddAmmo│               │  ├ BP_TargetBall      │
+│              │               │  ├ BP_StartButton     │
+│              │               │  └ BP_AmmoLoader      │
+├──────────────┴───────────────┴───────────────────────┤
+│                   动画与表现层                         │
+│   ABP_FPSPlayer (玩家)  │  ABP_VIRTUS (武器)          │
+│   BS_FPSPlayer          │  BS_VIRTUS                 │
+│   AN_Reload (通知)      │  蒙太奇系统                 │
+└──────────────────────────────────────────────────────┘</code></pre>
+<hr>
+
+<h2>五、关键数据表</h2>
+
+<h3>5.1 武器数值</h3>
 <table>
-<thead>
-<tr>
-<th>类别</th>
-<th>数量</th>
-</tr>
-</thead>
+<thead><tr><th>参数</th><th>值</th></tr></thead>
 <tbody>
-<tr>
-<td>自定义蓝图</td>
-<td>24</td>
-</tr>
-<tr>
-<td>动画文件</td>
-<td>75+</td>
-</tr>
-<tr>
-<td>音效文件</td>
-<td>200+</td>
-</tr>
-<tr>
-<td>Niagara 特效</td>
-<td>11</td>
-</tr>
-<tr>
-<td>弹孔贴花材质实例</td>
-<td>7</td>
-</tr>
-<tr>
-<td>武器网格</td>
-<td>12</td>
-</tr>
-<tr>
-<td>关卡</td>
-<td>1</td>
-</tr>
-<tr>
-<td>总资产</td>
-<td>933</td>
-</tr>
+<tr><td>武器名称</td><td>SIG MCX-VIRTUS</td></tr>
+<tr><td>口径</td><td>.300 BLK</td></tr>
+<tr><td>弹匣容量</td><td>30 发</td></tr>
+<tr><td>总备弹</td><td>180 发</td></tr>
+<tr><td>有效射程</td><td>10000 UE 单位</td></tr>
+<tr><td>射击模式</td><td>全自动</td></tr>
+<tr><td>换弹时间</td><td>约 2.5s（空仓）/ 约 2.0s（战术）</td></tr>
 </tbody>
 </table>
-<hr />
-<h2>九、已知问题与优化方向</h2>
-<h3>9.1 已知问题</h3>
+
+<h3>5.2 移动数值</h3>
 <table>
-<thead>
-<tr>
-<th>#</th>
-<th>问题</th>
-<th>状态</th>
-</tr>
-</thead>
+<thead><tr><th>状态</th><th>速度（UE单位/秒）</th><th>FOV</th></tr></thead>
 <tbody>
-<tr>
-<td>1</td>
-<td>靶子 AnyDamage 事件待补完（射线检测有 ApplyDamage，靶子侧需加 Event AnyDamage）</td>
-<td>修复中</td>
-</tr>
-<tr>
-<td>2</td>
-<td>仅单一武器，无武器切换系统</td>
-<td>后续扩展</td>
-</tr>
-<tr>
-<td>3</td>
-<td>无计分 / 关卡通关逻辑</td>
-<td>后续扩展</td>
-</tr>
-<tr>
-<td>4</td>
-<td>靶场 5 站训练流程尚未搭建</td>
-<td>规划中</td>
-</tr>
+<tr><td>步行</td><td>265</td><td>100°</td></tr>
+<tr><td>瞄准移动</td><td>400</td><td>待定</td></tr>
+<tr><td>冲刺</td><td>600</td><td>100°</td></tr>
 </tbody>
 </table>
-<h3>9.2 后续扩展方向</h3>
+<hr>
+
+<h2>六、已知问题与扩展方向</h2>
+
+<h3>6.1 已知问题</h3>
 <table>
-<thead>
-<tr>
-<th>方向</th>
-<th>说明</th>
-</tr>
-</thead>
+<thead><tr><th>#</th><th>问题</th><th>状态</th></tr></thead>
 <tbody>
-<tr>
-<td>武器扩展</td>
-<td>添加手枪 / 冲锋枪 / 霰弹枪，利用 BP_WeaponBase 派生</td>
-</tr>
-<tr>
-<td>敌人 AI</td>
-<td>添加行为树驱动的 AI 敌人（巡逻 / 发现 / 追击 / 攻击）</td>
-</tr>
-<tr>
-<td>Level Sequence</td>
-<td>靶场开场 CG + NPC 教官语音引导</td>
-</tr>
-<tr>
-<td>音效混合</td>
-<td>MetaSound 实现枪声远近感 / 室内混响</td>
-</tr>
-<tr>
-<td>后处理</td>
-<td>瞄准景深 / 伤害屏幕边缘血丝 / 呼吸晃动</td>
-</tr>
+<tr><td>1</td><td>BP_AmmoLoader 缺少 StaticMesh 和 Text Render 外观组件</td><td>待补充</td></tr>
+<tr><td>2</td><td>仅单一武器，无武器切换系统</td><td>后续扩展</td></tr>
+<tr><td>3</td><td>靶场仅射击小球，玩法单一</td><td>v1.00 目标</td></tr>
+</tbody>
+</table>
+
+<h3>6.2 版本路线图</h3>
+<table>
+<thead><tr><th>版本</th><th>目标</th></tr></thead>
+<tbody>
+<tr><td>v1.00</td><td>实现大部分 Aimlab 功能（多模式训练、数据统计、难度递进）</td></tr>
+<tr><td>v2.00</td><td>滑铲 + 蹲下 + COD 战役模式新手教程白盒</td></tr>
+<tr><td>后续</td><td>武器扩展（手枪 / 冲锋枪 / 霰弹枪）· 敌人 AI · 后处理（瞄准景深 / 伤害血丝 / 呼吸晃动）</td></tr>
 </tbody>
 </table>
 </body>

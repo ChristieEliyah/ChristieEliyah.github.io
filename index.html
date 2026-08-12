@@ -546,6 +546,11 @@
       <div class="art-detail">
         <div style="font-size:13px; color:var(--text-secondary); line-height:1.9; max-width:760px;">
 
+          <!-- 🎬 录屏演示 -->
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:0 0 12px;">🎬 当前版本 v0.42 · 录屏演示（8.12 实机）</p>
+          <video src="videos/fps-demo-0812.mp4" controls preload="metadata" style="width:100%; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08);"></video>
+          <p style="font-size:12px; color:var(--text-muted); margin:8px 0 24px;">1080p 60fps · 95s · 涵盖移动 / 射击 / 命中反馈 / 小球靶场 / 补弹 / 计分计时全流程</p>
+
           <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:14px;">📐 设计文档摘要</p>
 
           <p><b>项目定位：</b>UE5 FPS 训练靶场 Demo，参考 COD 新手教程关卡设计，纯蓝图开发。从 XL_FPSPack 资产包基础上进行系统化整合与定制，覆盖输入层→逻辑层→表现层的完整链路。</p>
@@ -577,28 +582,80 @@
           <p style="margin-top:14px; font-size:12px; color:var(--text-muted);">项目资产统计：933 个文件 | 9 个蓝图类 | 2 个接口 | 3 个枚举 | 38 套骨骼动画 | 35 个 Niagara VFX | 8 个 Sound Cue | 31 个 Sound Wave</p>
 
           <a href="fps-design-doc.html" target="_blank" rel="noopener" style="display:inline-block; margin-top:18px; padding:8px 18px; background:var(--text); color:#fff; border-radius:5px; text-decoration:none; font-size:13px; font-weight:600;">📄 查看完整设计文档 →</a>
+          <a href="fps-update-log.html" target="_blank" rel="noopener" style="display:inline-block; margin-top:18px; margin-left:8px; padding:8px 18px; background:#fff; color:var(--text); border:1px solid var(--border); border-radius:5px; text-decoration:none; font-size:13px; font-weight:600;">📜 查看开发日志 v0.1→v0.42 →</a>
         </div>
       </div>
     </details>
 
-    <!-- 2 ── OpenGL 射击游戏 -->
-    <a class="project-card" href="#" target="_blank" rel="noopener">
-      <div class="thumb">
-        <img src="thumbs/opengl_shoot.png" alt="OpenGL 射击小游戏引擎画面">
-      </div>
-      <div class="info">
-        <div class="name">OpenGL 射击小游戏</div>
-        <div class="desc">计算机图形学课程设计。基于 C++ 与 OpenGL 从零搭建 3D 第一人称射击游戏。包含完整渲染管线、自写 GLSL Shader（球/枪/粒子/房间/阴影/太阳）、Assimp 模型加载、粒子系统、阴影投射、Phong 光照模型。可执行 Demo 已编译完成。</div>
-        <div class="tags">
-          <span class="tag">C++</span>
-          <span class="tag">OpenGL</span>
-          <span class="tag">GLSL</span>
-          <span class="tag">Assimp</span>
-          <span class="tag">粒子系统</span>
+    <!-- 2 ── OpenGL 射击游戏（含3D课程作品） -->
+    <details class="project-card art-expand">
+      <summary>
+        <div class="thumb">
+          <img src="thumbs/opengl_shoot.png" alt="OpenGL 射击小游戏引擎画面">
+        </div>
+        <div class="info">
+          <div class="name">
+            OpenGL 射击小游戏
+            <span class="badge gray">Demo</span>
+          </div>
+          <div class="desc">计算机图形学课程设计。基于 C++ 与 OpenGL 从零搭建 3D 第一人称射击游戏。包含完整渲染管线、自写 GLSL Shader（球/枪/粒子/房间/阴影/太阳）、Assimp 模型加载、粒子系统、阴影投射、Phong 光照模型。▼ 展开查看 3D 课程作品 + AK 武器模型</div>
+          <div class="tags">
+            <span class="tag">C++</span>
+            <span class="tag">OpenGL</span>
+            <span class="tag">GLSL</span>
+            <span class="tag">Assimp</span>
+            <span class="tag">粒子系统</span>
+            <span class="tag">Phong</span>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+
+      <div class="art-detail">
+        <div style="font-size:13px; color:var(--text-secondary); line-height:1.9; max-width:760px;">
+
+          <!-- 项目概述 -->
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:10px;">📂 项目概述</p>
+          <p>一个 3D 第一人称射击 Demo：玩家在盒子靶场移动、瞄准、射击动态小球目标。涉及完整渲染管线、自写 GLSL Shader、Assimp 模型加载、粒子系统、Phong 光照、阴影映射、透明度混合。</p>
+
+          <!-- 模块架构 -->
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:20px 0 10px;">⚙️ OOP 模块拆分</p>
+          <table style="width:100%; border-collapse:collapse; font-size:13px;">
+            <tr style="background:var(--bg-muted);"><th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">模块类</th><th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">职责</th></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);"><b>Model / Shader / World</b></td><td style="padding:6px 10px; border:1px solid var(--border);">模型管理类 · 着色器编译 · 世界容器</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);"><b>BallManager</b></td><td style="padding:6px 10px; border:1px solid var(--border);">小球管理类 · 动态生成 / 销毁</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);"><b>Camera</b></td><td style="padding:6px 10px; border:1px solid var(--border);">摄像机类 · 第一人称视角 + Keyboard / Mouse 输入</td></tr>
+            <tr><td style="padding:6px 10px; border:1px solid var(--border);"><b>Player / Main</b></td><td style="padding:6px 10px; border:1px solid var(--border);">交互管理类 · 玩家状态机 + 游戏循环</td></tr>
+          </table>
+
+          <!-- 核心能力 -->
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:20px 0 10px;">🎮 已实现核心系统</p>
+          <ul style="margin:6px 0 0; padding-left:20px;">
+            <li><b>场景搭建</b>：盒子靶场 · 天空盒 · 简易太阳 · 地形 + 静态道具</li>
+            <li><b>动态模型</b>：点击鼠标抖动的武器 · R 键换弹的弹匣 · 移动小球</li>
+            <li><b>第一人称控制</b>：WASD 移动 · 鼠标视角 · 空格跳跃</li>
+            <li><b>射击系统</b>：左键射击 · 实时碰撞检测 · 弹药消耗 · R 换弹</li>
+            <li><b>游戏状态</b>：生命值 · 得分 · 时间显示 · 计分系统</li>
+            <li><b>光照与阴影</b>：定向光 + 点光源 · Phong 光照模型 · 阴影映射 · 漫反射/镜面反射贴图 · 透明度混合</li>
+            <li><b>武器模型</b>：使用 Blender 建模 AK-47 低聚模型，通过 Assimp 加载到场景中</li>
+          </ul>
+
+          <!-- AK47 模型展示 -->
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:22px 0 10px;">🔫 Blender 建模作品 · AK-47 低聚模型</p>
+          <p style="font-size:12px; color:var(--text-muted); margin:0 0 8px;">课程作品 · Blender 基础建模 · 输出三角形网格 + UV 展开 · Assimp 加载到 OpenGL 场景</p>
+          <div style="background:#fafafa; border-radius:8px; padding:14px; margin-top:8px;">
+            <img src="thumbs/ak47_basic.jpg" alt="AK-47 Blender 基础模型渲染图" style="width:100%; border-radius:6px; display:block;">
+          </div>
+
+          <!-- 参考模型 (折叠收纳) -->
+          <!-- (略：实物参考资料图已隐去，避免视觉冗余) -->
+
+          <!-- 课程背景 -->
+          <a href="#" target="_blank" rel="noopener" style="display:inline-block; margin-top:18px; padding:8px 18px; background:var(--text); color:#fff; border-radius:5px; text-decoration:none; font-size:13px; font-weight:600; opacity:0.5; cursor:not-allowed;">📑 《3D程序设计基础》课程报告 →</a>
+          <p style="font-size:11px; color:var(--text-muted); margin-top:6px;">（课程报告原文已精简融入本页表格 / 可执行 Demo 在 F:\计算机图形学射击小游戏\）</p>
         </div>
       </div>
-      <div class="arrow">→</div>
-    </a>
+    </details>
 
     <!-- 3 ── 艾尔登法环大世界报告 -->
     <a class="project-card" href="https://christieeliyah.github.io/elden-ring-ecology/" target="_blank" rel="noopener">
@@ -711,8 +768,8 @@
             </div>
           </summary>
           <div class="art-preview">
-            <img src="F:/项目与作品/3d建模/doro痛车/视角1.png" alt="doro痛车渲染图1">
-            <img src="F:/项目与作品/3d建模/doro痛车/视角2.png" alt="doro痛车渲染图2">
+            <img src="thumbs/doro_1.jpg" alt="doro痛车渲染图1">
+            <img src="thumbs/doro_2.jpg" alt="doro痛车渲染图2">
           </div>
         </details>
 

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仿COD UE FPS 射击游戏 Demo · 开发日志</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    line-height: 1.8;
+    color: #1a1a2e;
+    background: #fff;
+  }
+  h1 { font-size: 28px; border-bottom: 2px solid #333; padding-bottom: 12px; margin-top: 0; }
+  h2 { font-size: 22px; margin-top: 40px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+  h3 { font-size: 18px; margin-top: 28px; }
+  h4 { font-size: 15px; margin-top: 20px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+  th, td { border: 1px solid #d0d0d0; padding: 8px 12px; text-align: left; }
+  th { background: #f5f6fa; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  code { background: #f0f0f5; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+  pre { background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 6px; overflow-x: auto; font-size: 13px; line-height: 1.6; }
+  pre code { background: none; padding: 0; color: inherit; }
+  blockquote { border-left: 3px solid #555; padding-left: 16px; color: #555; margin-left: 0; }
+  a { color: #2563eb; }
+  hr { border: none; border-top: 1px solid #eee; margin: 32px 0; }
+  .back { display: inline-block; margin-bottom: 24px; color: #666; text-decoration: none; font-size: 14px; }
+  .back:hover { color: #2563eb; }
+  .nav-links { display: flex; gap: 16px; margin-bottom: 24px; font-size: 14px; }
+  .nav-links a { text-decoration: none; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .ver-tag { display: inline-block; background: #e8eaf6; color: #3949ab; padding: 2px 10px; border-radius: 12px; font-size: 13px; font-weight: 600; margin-left: 8px; }
+  .current-tag { background: #e8f5e9; color: #2e7d32; }
+</style>
+</head>
+<body>
+<a class="back" href="./">&larr; 返回作品集首页</a>
+<div class="nav-links">
+  <a href="fps-design-doc.html">设计文档</a>
+  <a href="fps-update-log.html"><strong>开发日志</strong></a>
+</div>
+<h1>仿COD UE FPS 射击游戏 Demo · 开发日志</h1>
+<blockquote>
+<p><strong>项目名称</strong>: 仿COD UE FPS 射击游戏 Demo<br>
+<strong>引擎版本</strong>: Unreal Engine 5.8<br>
+<strong>当前版本</strong>: v0.42</p>
+</blockquote>
+<hr>
+
+<h2>v0.1 <span class="ver-tag">3C 开发</span></h2>
+
+<h3>项目启动</h3>
+<ul>
+<li>创建 UE 5.8 纯蓝图 FPS 项目，项目路径 <code>D:\ueproject\FPS_Game</code></li>
+<li>导入 XL_FPSPack 资产包，获取玩家手臂模型、武器模型、动画、音效资源</li>
+<li>创建 BP_FPSPlayer 玩家角色蓝图，配置 Camera + CharacterMesh + CharacterMovement 组件</li>
+</ul>
+
+<h3>玩家角色系统</h3>
+<ul>
+<li>实现第一人称视角控制（AddControllerYawInput + AddControllerPitchInput）</li>
+<li>创建 E_PlayerState 枚举（Idle / Walk / Sprint / ADS）</li>
+<li>实现移动速度切换：步行 265 / 瞄准 400 / 冲刺 600</li>
+<li>实现 FOV 平滑过渡：FInterpTo 在默认 FOV 和瞄准 FOV 之间插值</li>
+<li>配置鼠标灵敏度控制</li>
+</ul>
+
+<hr>
+
+<h2>v0.2 <span class="ver-tag">射击系统开发</span></h2>
+
+<h3>输入系统</h3>
+<ul>
+<li>创建 6 个 Enhanced Input Action（IA_Fire / IA_Aim / IA_Move / IA_Look / IA_Reload / IA_Run）</li>
+<li>创建 IMC_FPSinput 输入映射上下文，绑定按键</li>
+<li>在 BP_FPSPlayer BeginPlay 中挂载输入映射</li>
+</ul>
+
+<h3>武器系统</h3>
+<ul>
+<li>创建 BP_WeaponBase 武器基类，实现 BI_Fire 接口</li>
+<li>定义核心变量：BaseDamage / CurrentAmmo / MagSize / TotalAmmo / FireRate</li>
+<li>创建 BP_VIRTUS 突击步枪子类，装配 6 个配件</li>
+<li>实现开火逻辑：LineTraceSingle → BreakHitResult → 物理材质判定 → VFX/SFX/弹孔</li>
+<li>实现 Hitscan 即时命中检测，Visibility 通道</li>
+<li>配置 13 种表面物理材质差异化响应</li>
+<li>实现弹壳抛出系统（BP_Casing）：ProjectileMovement + RotatingMovement + 自动销毁</li>
+<li>实现枪口闪光特效</li>
+</ul>
+
+<h3>动画系统</h3>
+<ul>
+<li>创建 ABP_FPSPlayer 玩家动画蓝图，5 状态 BlendSpace</li>
+<li>创建 ABP_VIRTUS 武器动画蓝图，3 状态 BlendSpace</li>
+<li>实现 AN_Reload 换弹 AnimNotify：计算装填量 → 更新弹药 → 刷新 HUD</li>
+</ul>
+
+<h3>HUD 系统</h3>
+<ul>
+<li>创建 UI_MainUI 蓝图</li>
+<li>实现弹药显示：当前弹药 / 总备弹</li>
+<li>实现 updateweaponinfo 函数：GetOwningPlayer → GetPawn → Cast → Get CurrentWeapon → Cast → Ammo → FormatText → SetText</li>
+</ul>
+
+<h3>弹药系统修复</h3>
+<ul>
+<li>修复 IA_Reload 未保存到磁盘导致 R 键换弹失败</li>
+<li>修复 UI 弹药不显示问题：updateweaponinfo 数据获取链路未接通</li>
+<li>修复 UI 仅开枪后显示问题：BeginPlay 未 Spawn 武器导致 Weapon 变量为空</li>
+</ul>
+
+<h3>设计文档</h3>
+<ul>
+<li>编写 FPS 设计文档 v1.0</li>
+<li>部署到 GitHub Pages 作品集</li>
+</ul>
+
+<hr>
+
+<h2>v0.3 <span class="ver-tag">外围系统开发</span></h2>
+
+<h3>靶场立牌系统（后弃用）</h3>
+<ul>
+<li>创建 BP_TargetDummy 立牌蓝图：Mesh + HeadBox + BodyBox 双碰撞体</li>
+<li>实现头部一枪倒、身体四枪倒逻辑</li>
+<li>实现 Timeline 倒下/扶正动画（TL_falldown / TL_reset）</li>
+<li>遇到立牌被击中不倒下问题：Mesh 碰撞遮挡 BoxCollision</li>
+<li>诊断：Onhit 函数为 Custom Event 而非 Function，跨蓝图调用失败</li>
+<li>修复：将 Onhit 改为 Function 类型，添加 HitComp 输入参数</li>
+<li><strong>最终决定弃用立牌系统，改用更简单的小球靶场</strong></li>
+</ul>
+
+<h3>Text Render 提示</h3>
+<ul>
+<li>在 BP_AmmoLoader 中添加 Text Render 组件显示 "Press F to Reload"</li>
+<li>解决字体缺失黑块问题：设置 Font 为 Roboto</li>
+<li>解决文字不可见问题：调整 World Size / Rotation / 位置</li>
+</ul>
+
+<h3>材质系统</h3>
+<ul>
+<li>创建 M_LimeWall 石灰墙材质</li>
+<li>实现 Noise + Lerp 双色混合颗粒质感</li>
+<li>参数：Scale=80, Levels=4, 亮色(0.62,0.6,0.56) + 暗色(0.48,0.46,0.42)</li>
+</ul>
+
+<hr>
+
+<h2>v0.4 <span class="ver-tag">靶场初见雏形</span></h2>
+
+<h3>靶场小球系统</h3>
+<ul>
+<li>创建 BP_TargetManager 管理器蓝图：MaxBalls=6, SpawnRange=500（Instance Editable）</li>
+<li>创建 BP_TargetBall 小球蓝图：Sphere Mesh + BlockAll 碰撞 + Hit 函数</li>
+<li>创建 BP_StartButton 启动按钮蓝图：射击触发 → 调用 Manager.StartGame()</li>
+</ul>
+
+<h4>遇到的问题与修复</h4>
+<ul>
+<li><strong>小球不生成</strong>：StartButton 的 Hit 未正确调用 Manager 的 StartGame → 修复 Get All Actors → Get(0) → StartGame 连线</li>
+<li><strong>位置固定不跟随 Manager</strong>：SpawnOneBall 用 SpawnCenter 变量而非 GetActorLocation → 改为 GetActorLocation + RandomUnitVector × SpawnRange</li>
+<li><strong>小球不消失</strong>：BP_WeaponBase 缺少 Cast To BP_TargetBall → 在 Cast 链路最前面加 Cast To BP_TargetBall → Hit → DestroyActor</li>
+<li><strong>SpawnRange 不可编辑</strong>：变量未勾选 Instance Editable → 勾选后编译保存</li>
+</ul>
+
+<h3>零延迟补球机制</h3>
+<ul>
+<li>原方案用定时器每 0.5 秒检查补球 → 改为球被打掉时立即调 Manager.SpawnOneBall() 补球</li>
+<li>Hit 函数流程：SpawnOneBall → AddScore → DestroyActor(Self)</li>
+</ul>
+
+<h3>计分计时系统（进行中）</h3>
+<ul>
+<li>BP_TargetManager 添加 TimerText / ScoreText 两个 Text Render 组件</li>
+<li>添加 Score / ElapsedTime / GameStarted 变量</li>
+<li>实现 StartTimer 自定义事件 + Set Timer by Event 循环计时</li>
+<li>实现 AddScore 函数：Score + 1 → FormatText → SetText</li>
+<li>修改 StartGame 函数：清零 → StartTimer → 生成 6 球</li>
+<li>修改 BP_TargetBall Hit 函数：补球后调 AddScore</li>
+</ul>
+
+<h3>设计文档重构</h3>
+<ul>
+<li>将设计文档拆分为设计文档 + 开发日志两个独立文档</li>
+<li>设计文档改为结论先行结构：先写已实现系统总览，再写实现流程</li>
+<li>更新文档版本至 v2.0</li>
+</ul>
+
+<hr>
+
+<h2>v0.41 <span class="ver-tag">补弹功能</span></h2>
+
+<h3>弹药补给系统</h3>
+<ul>
+<li>创建 BP_AmmoLoader 弹药补给箱蓝图</li>
+<li>实现射击补给箱补满弹药至 180 发</li>
+<li>遇到 Cast 失败问题：Object 引脚需连 BreakHitResult 的 Hit Actor</li>
+<li>修复 Cast 链路：Is Valid → 音效 → Cast To BP_AmmoLoader → Hit → Set TotalAmmo(180)</li>
+<li>修复击中音效丢失：将音效/特效移到 Cast 之前，所有命中都播放</li>
+</ul>
+
+<h3>F 键补弹</h3>
+<ul>
+<li>创建 IA_AddAmmo Input Action，绑定 F 键</li>
+<li>在 BP_FPSPlayer 中实现 F 键补弹逻辑</li>
+<li>修复 AddAmmo 为 Custom Event 无法跨蓝图调用问题：改为 Function</li>
+<li>修复 Target 引脚连 Weapon 而非 CurrentWeapon 问题</li>
+</ul>
+
+<hr>
+
+<h2>v0.42 <span class="ver-tag current-tag">增加小球（当前版本）</span></h2>
+
+<h3>小球增加机制</h3>
+<ul>
+<li>实现射击增加小球按钮：每次射击增加 1 个小球，无上限累加</li>
+<li>打掉 1 个球立即补 1 个，始终保持当前数量</li>
+<li>修改 BP_StartButton 逻辑：区分"启动靶场"和"增加小球"两种触发</li>
+<li>修改 BP_TargetManager：支持动态调整球数量上限</li>
+</ul>
+</body>
+</html>
