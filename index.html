@@ -516,7 +516,7 @@
   <!-- ═══════════ 项目作品 ═══════════ -->
   <div class="section-title">
     项目作品
-    <span class="count">6 项</span>
+    <span class="count">7 项</span>
   </div>
   <div class="projects">
 
@@ -524,7 +524,7 @@
     <details class="project-card art-expand">
       <summary>
         <div class="thumb">
-          <img src="https://cdn.jsdelivr.net/gh/christieeliyah/christieeliyah.github.io@main/thumbs/fps_game.png" alt="UE5 FPS射击游戏截图">
+          <img src="thumbs/fps_demo.jpg" alt="UE5 FPS 训练靶场 Demo 实机画面">
         </div>
         <div class="info">
           <div class="name">
@@ -580,6 +580,12 @@
 
           <p style="margin-top:12px;"><b>技术架构：</b>分层设计 — Input 层（Enhanced Input）→ Controller 层（PlayerController）→ Character 层（BP_FPSPlayer + 状态机）→ Weapon 层（BP_WeaponBase → BP_VIRTUS）→ Feedback 层（VFX / SFX / 物理）。蓝图接口 BI_Fire 实现武器与玩家的解耦通讯。</p>
 
+          <p style="margin-top:22px; font-size:15px; font-weight:700; color:var(--text);">🖥 实机运行画面（UE5 编辑器）</p>
+          <div style="background:#fafafa; border-radius:8px; padding:14px; margin-top:8px;">
+            <img src="thumbs/fps_editor.jpg" alt="UE5 编辑器中运行 FPS 靶场 Demo 的实机画面" style="width:100%; border-radius:6px; display:block;">
+          </div>
+          <p style="font-size:12px; color:var(--text-muted); margin:8px 0 0;">左侧实机画面：第一人称持枪 + 蓝球靶子系统 + HUD（实时弹药 18/180、按 F 补弹、射击计分提示）；右侧为 World Settings 世界设置面板。当前靶场为自制测试场景，用于验证射击、命中反馈与计分链路。</p>
+
           <p style="margin-top:14px; font-size:12px; color:var(--text-muted);">项目资产统计：933 个文件 | 9 个蓝图类 | 2 个接口 | 3 个枚举 | 38 套骨骼动画 | 35 个 Niagara VFX | 8 个 Sound Cue | 31 个 Sound Wave</p>
 
           <a href="https://christieeliyah.github.io/fps-design-doc.html" target="_blank" rel="noopener" style="display:inline-block; margin-top:18px; padding:8px 18px; background:var(--text); color:#fff; border-radius:5px; text-decoration:none; font-size:13px; font-weight:600;">📄 查看完整设计文档 →</a>
@@ -588,7 +594,88 @@
       </div>
     </details>
 
-    <!-- 2 ── OpenGL 射击游戏（含3D课程作品） -->
+    <!-- 2 ── UE5 挑战者坦克 · 载具驾驶与交互 -->
+    <details class="project-card art-expand">
+      <summary>
+        <div class="thumb">
+          <img src="thumbs/tank_demo.jpg" alt="UE5 挑战者坦克驾驶实机画面">
+        </div>
+        <div class="info">
+          <div class="name">
+            UE5 挑战者坦克 · 载具驾驶与交互
+            <span class="badge">★ 载具实战</span>
+          </div>
+          <div class="desc">在 FPS Demo 中集成一辆可驾驶主战坦克：Chaos Vehicles 物理 + 增强输入系统 + 走近自动上车 / E 键下车。用质量、质心、引擎转速三个物理参数调出"重车感"，并以 A/B 对比录屏验证重心对翻车的影响。▼ 展开查看实现与调参</div>
+          <div class="tags">
+            <span class="tag">Chaos Vehicles</span>
+            <span class="tag">增强输入</span>
+            <span class="tag">上车/下车</span>
+            <span class="tag">手感调参</span>
+          </div>
+          <div style="margin-top:9px; padding-top:9px; border-top:1px dashed var(--border); font-size:12.5px; line-height:1.9;">
+            <a href="vehicle-breakdown.html" onclick="event.stopPropagation();" style="color:var(--tag-text); text-decoration:underline; text-underline-offset:2px;">📄 《载具拆解：9 类战场载具、4 种坦克性格、1 辆 Challenger 2》</a><br>
+            <a href="tank-implementation.html" onclick="event.stopPropagation();" style="color:var(--tag-text); text-decoration:underline; text-underline-offset:2px;">🔧 《用参数驯服一辆 Challenger 2：实测数据与踩坑记录》</a>
+          </div>
+        </div>
+        <div class="arrow">▼</div>
+      </summary>
+
+      <div class="art-detail">
+        <div style="font-size:13px; color:var(--text-secondary); line-height:1.9; max-width:760px;">
+
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:0 0 12px;">🎬 实机演示 · 走近上车 → 驾驶 → 炮塔瞄准（64s）</p>
+          <video controls preload="metadata" poster="thumbs/tank_demo.jpg" style="width:100%; border-radius:6px; display:block; background:#000;">
+            <source src="videos/tank-demo.mp4" type="video/mp4">
+            您的浏览器不支持视频播放，可<a href="videos/tank-demo.mp4">点此下载</a>观看。
+          </video>
+          <p style="font-size:12px; color:var(--text-muted); margin:8px 0 24px;">完整流程：FPS 角色行走 → 走进触发区自动上车 → WASD 驾驶（质量 8000 / 质心 Z=-100 的重车感）→ 炮塔瞄准。录制环境为 UE5 编辑器 PIE 模式，右下为弹药 HUD。</p>
+
+          <p><b>项目定位：</b>在已有的 UE5 FPS Demo 中扩展载具玩法——目标是一辆"走到旁边能上车、能开、能下车"的挑战者主战坦克（车长 786cm / 高 294cm）。不替换原有 FPS 玩法，重点验证一件事：<b>载具手感是怎么被物理参数决定的</b>。</p>
+
+          <p style="margin-top:22px; font-size:15px; font-weight:700; color:var(--text);">🖥 实机运行画面（UE5 编辑器）</p>
+          <div style="background:#fafafa; border-radius:8px; padding:14px; margin-top:8px;">
+            <img src="thumbs/tank_editor.jpg" alt="在 UE5 编辑器中驾驶挑战者坦克的实机画面" style="width:100%; border-radius:6px; display:block;">
+          </div>
+          <p style="font-size:12px; color:var(--text-muted); margin:8px 0 0;">车长视角驾驶画面：前景为玩家操控的挑战者坦克（炮塔 / 车长塔 / 天线），左后方是作为对照的第二辆坦克，中央绿色圆环为瞄准准星，右下为弹药 HUD。右侧大纲面板可见本场景由 <b>Tank_CurrentSpawner</b>、<b>Tank_Base_C</b>、<b>BP_UI</b> 与关卡光照体系共同构成。</p>
+
+          <p style="margin-top:14px;"><b>三层实现：</b></p>
+          <table style="width:100%; border-collapse:collapse; font-size:13px; margin:6px 0;">
+            <tr style="background:var(--bg-muted);">
+              <th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">层级</th>
+              <th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">技术方案</th>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px; border:1px solid var(--border);">物理层</td>
+              <td style="padding:6px 10px; border:1px solid var(--border);">Chaos Vehicles —— WheeledVehiclePawn 作父类 + ChaosVehicleWheel 轮子蓝图（前/后轮半径 74cm，按车高 ×0.25 反推离地间隙）+ ChaosWheeledVehicleMovementComponent 移动组件；FPS 项目原本不带这套配置，需先启用插件与物理子步进</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px; border:1px solid var(--border);">输入层</td>
+              <td style="padding:6px 10px; border:1px solid var(--border);">增强输入系统：油门 W / 转向 A·D / 刹车 S / 手刹 Space 四个轴输入 + 下车 E 一个布尔输入；用「事件 被占据 / 被取消占据」控制映射上下文的激活与移除，避免坦克输入与 FPS 输入同时生效</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 10px; border:1px solid var(--border);">交互层</td>
+              <td style="padding:6px 10px; border:1px solid var(--border);">走进盒体触发区自动上车（Possess 自身）+ E 键下车（控制权交还角色、自动松油门、拉手刹停稳、并把角色移到车侧避免卡进车体）</td>
+            </tr>
+          </table>
+
+          <p style="margin-top:14px;"><b>手感调参（三个核心物理参数）：</b></p>
+          <ul style="margin:6px 0; padding-left:20px;">
+            <li><b>质量 = 8000</b> —— 给出重车该有的惯性，起步和刹车都有分量</li>
+            <li><b>质心偏移 Z = -100</b> —— 重心压低，急转弯不翻车</li>
+            <li><b>最大引擎转速 = 4500</b> —— 刻意限制极速，贴合主战坦克的移动节奏</li>
+          </ul>
+
+          <p style="margin-top:14px;"><b>验证方法（A/B 对比）：</b>把质心偏移改成 +150 跑一段（急转必翻），再改回 -100 跑一段（稳定通过），两段录屏对照；同时用 <b>chaos.DebugDraw.Enabled 1</b> 观察轮子受力、悬挂形变与重心位置。</p>
+
+          <p style="margin-top:14px;"><b>配套分析：</b>同步输出《战地6 载具系统拆解》，从载具分类、驾驶参数、上下车与维修机制等维度拆解商业 FPS 的载具设计，作为自己这套 Demo 的设计参照。</p>
+
+          <p style="margin-top:14px;"><b>收获：</b>载具手感不是"感觉对了就行"，而是质量 / 质心 / 悬挂 / 输入响应几组参数叠加的结果。能把每个参数改动对应的体验后果讲清楚，才能和程序在同一套语言里讨论设计。</p>
+
+        </div>
+      </div>
+    </details>
+
+    <!-- 3 ── OpenGL 射击游戏（含3D课程作品） -->
     <details class="project-card art-expand">
       <summary>
         <div class="thumb">
@@ -671,7 +758,7 @@
       </div>
     </details>
 
-    <!-- 3 ── 艾尔登法环大世界报告 -->
+    <!-- 4 ── 艾尔登法环大世界报告 -->
     <a class="project-card" href="https://christieeliyah.github.io/elden-ring-ecology/" target="_blank" rel="noopener">
       <div class="thumb">
         <img src="https://cdn.jsdelivr.net/gh/christieeliyah/christieeliyah.github.io@main/thumbs/elden_ring.jpg" alt="《艾尔登法环》官方宣传图">

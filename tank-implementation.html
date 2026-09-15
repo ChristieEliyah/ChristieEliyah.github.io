@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>用参数驯服一辆 Challenger 2：实测数据与踩坑记录</title>
+
+<style>
+:root {
+  --bg: #fafafa;
+  --panel: #ffffff;
+  --text: #1f2328;
+  --text-soft: #57606a;
+  --border: #d0d7de;
+  --accent: #0969da;
+  --accent-soft: #ddf4ff;
+  --code-bg: #f6f8fa;
+  --table-stripe: #f6f8fa;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 28px 80px;
+}
+header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+  margin-bottom: 28px;
+}
+header .meta {
+  color: var(--text-soft);
+  font-size: 13px;
+  margin-top: 4px;
+}
+h1 {
+  font-size: 28px;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+h2 {
+  font-size: 22px;
+  margin: 36px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+h3 {
+  font-size: 18px;
+  margin: 26px 0 10px;
+  color: var(--text);
+}
+h4 {
+  font-size: 16px;
+  margin: 20px 0 8px;
+}
+p { margin: 10px 0; }
+blockquote {
+  margin: 14px 0;
+  padding: 10px 16px;
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+  border-radius: 0 6px 6px 0;
+}
+blockquote p { margin: 4px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 4px 0; }
+hr {
+  border: 0;
+  border-top: 1px dashed var(--border);
+  margin: 28px 0;
+}
+code {
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
+  font-size: 13px;
+  color: #cf222e;
+}
+pre {
+  background: var(--code-bg);
+  padding: 14px 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--text);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14px;
+  background: var(--panel);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--table-stripe);
+  font-weight: 600;
+  color: var(--text);
+}
+tbody tr:nth-child(even) {
+  background: var(--table-stripe);
+}
+strong { color: var(--text); }
+em { color: var(--text-soft); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  margin-right: 4px;
+}
+.callout {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 14px 0;
+}
+.callout.warn { border-left: 4px solid #d4a72c; background: #fff8c5; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<h1 id="challenger-2">用参数驯服一辆 Challenger 2：实测数据与踩坑记录</h1>
+<blockquote>
+<p>本文的蓝图改动全部由 <strong>UE5 自带的 MCP</strong>（Model Context Protocol）驱动 Python 脚本完成；
+感谢 <strong>hy4</strong> 提供的夜间免费 token。</p>
+</blockquote>
+<p>在一个已经做完的 UE5 FPS Demo 里，加了一辆<strong>能开、能打、有完整 HUD</strong> 的主战坦克。</p>
+<blockquote>
+<p>配图：追尾视角实机截图（含准星与右下角弹药 HUD）</p>
+</blockquote>
+<h2 id="_1">实测数字</h2>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>实测</th>
+<th>参照</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>极速</td>
+<td><strong>53–55 km/h</strong></td>
+<td>真车（挑战者 2）56 km/h</td>
+</tr>
+<tr>
+<td>相机</td>
+<td><strong>车后 8.3 m、上方 5.8 m、俯角 10°</strong></td>
+<td>第三人称追尾</td>
+</tr>
+<tr>
+<td>炮塔转速</td>
+<td><strong>40°/s 恒定</strong>（炮管 25°/s）</td>
+<td>有上限，不是瞬转</td>
+</tr>
+<tr>
+<td>装填 / 备弹</td>
+<td><strong>3.5 s / 30 发</strong></td>
+<td>两道开火判定</td>
+</tr>
+<tr>
+<td>实现方式</td>
+<td><strong>纯蓝图，运行时零 C++</strong></td>
+<td>UE 5.8 / Chaos Vehicles</td>
+</tr>
+<tr>
+<td>改图方式</td>
+<td><strong>MCP + 脚本化</strong>（丢文件即执行）</td>
+<td>单次改动十几秒</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">三条结论</h2>
+<ol>
+<li><strong>手感是参数组合的结果</strong>，不是"感觉调一调"——质心差 250 单位就能决定翻不翻车。</li>
+<li><strong>所有难缠的问题都出在两个系统的交界处</strong>：物理与碰撞、输入与相机、弹药与 UI。</li>
+<li><strong>能把自己的判断写成可验证的实验（A/B 对比、实测数字），才算设计。</strong></li>
+</ol>
+<hr />
+<h2 id="_3">一、参数 → 体验</h2>
+<p>四个参数决定一辆坦克的性格：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+<th>调错的症状</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整车质量</td>
+<td>加速快慢与惯性</td>
+<td>太轻像卡丁车</td>
+</tr>
+<tr>
+<td>质心 Z</td>
+<td>稳定性</td>
+<td>偏高则急转翻车</td>
+</tr>
+<tr>
+<td>引擎扭矩曲线</td>
+<td>低速爆发力</td>
+<td>峰值来得太晚，起步发肉</td>
+</tr>
+<tr>
+<td>弹簧刚度</td>
+<td>悬挂软硬</td>
+<td>太软像开船</td>
+</tr>
+</tbody>
+</table>
+<p><strong>A/B 实证</strong>
+质心 Z = +150 → 急转弯翻车；Z = −100 → 稳定通过同一个弯。这是可复现的对照，不是"感觉好多了"。</p>
+<p><strong>实测对标</strong>
+极速 53–55 km/h，对照真车 56 km/h，误差在测量噪声内（坡度、风阻、轮胎摩擦参数都会影响几个 km/h）。</p>
+<p><strong>调参方法（三步，可复现）</strong>
+1. 先按公式给近似值（轮子半径按车高、轮距按车宽、质心按重心位置）
+2. 用引擎的调试可视化看轮子受力与接地点，不靠眼睛猜
+3. 微调 → 再跑同一条测试路线做对比</p>
+<p><strong>前提：不要拍数字。</strong>轮子半径、轮距这些必须由车体尺寸推出来，否则车体一改就全废。</p>
+<hr />
+<h2 id="_4">二、五个坑</h2>
+<p><strong>1. 炮弹只位移、不碰撞</strong>
+症状：炮弹飞出去，穿过地面飞到看不见。
+原因：弹道组件没有绑定碰撞体——根节点是个空场景组件。
+修法：把碰撞体显式设为移动组件的目标组件。</p>
+<p><strong>2. 炮弹生成在自己车体里</strong>
+症状：一开炮就炸在自己身上。
+原因：炮口偏移太短，出生点还在车体包围盒内。
+修法：炮口距离必须大于半个车长（约 470 cm）。</p>
+<p><strong>3. 炮塔"转速没有上限"</strong>
+症状：准星永远在追炮塔，转向毫无重量感。
+原因：用了指数插值——误差越小越慢，但误差大时速度趋近无穷。
+修法：换成恒定角速度插值（40°/s）。</p>
+<p><strong>4. 输入互相污染</strong>
+症状：上车后步兵视角被坦克抢走。
+原因：FPS 与坦克共用一套输入映射。
+修法：两套完全独立的映射上下文，用"被占据"事件切换。</p>
+<p><strong>5. 弹药被静默清空，一炮打不出</strong>
+症状：按开火毫无反应，日志也没有报错。
+定位：开火有两道判定（装填完成 + 有弹药），弹药被某处重置为 0，第二道判定直接拦下且无提示。
+修法：上车时初始化一次弹药状态（也符合"上车补弹"的直觉）。</p>
+<hr />
+<h2 id="mcp">三、工作流：用 MCP + 脚本驱动蓝图编辑</h2>
+<p><strong>这个项目 90% 以上的改动是"接线 + 查引脚"，纯手点是不现实的——手点一次十几分钟，而且不可复现。</strong></p>
+<p>整套工作流是三层：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>做什么</th>
+<th>用什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读取</td>
+<td>把蓝图的图结构暴露出来：节点、引脚、连线、默认值</td>
+<td>UE5 自带的 MCP 服务</td>
+</tr>
+<tr>
+<td>执行</td>
+<td>脚本丢进指定目录即自动执行，不用切窗口、不用重启编辑器</td>
+<td>一个文件指令队列钩子</td>
+</tr>
+<tr>
+<td>校验</td>
+<td>改完立即编译 + 读回状态，确认无误再落盘，顺手存一份备份</td>
+<td>引擎的编译与保存接口</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一条改动的典型流程</strong>
+读图结构 → 生成脚本 → 丢进队列 → 编辑器执行 → 编译并读回状态校验 → 落盘 + 备份存档。</p>
+<p><strong>收益</strong>
+- 单次改动从十几分钟压到十几秒
+- 每次改动都有脚本留档，<strong>可复现、可回滚</strong>，出错能定位到具体是哪一次改动
+- 反复失败也不会污染工程：每轮都先备份</p>
+<p><strong>代价（这部分才是重点）</strong>
+- 脚本一旦持有已失效的对象引用，会<strong>直接让编辑器崩溃</strong>——所以每次改图后必须重新取引脚信息，绝不缓存
+- 不能假设执行顺序：脚本会让编辑器"泵消息循环"，回调可能被嵌套触发，所以必须先记账再执行
+- 中文环境下的节点/引脚搜索常常返回多个同义项，<strong>必须按 id 精确匹配，不能取第一个</strong>——我在这上面错接过两次线</p>
+<hr />
+<h2 id="_5">四、模型准备：原料只有一个整体模型</h2>
+<p><strong>现在能单独转的每一个部件，都是在 Blender 里从整车模型上拆出来的。</strong></p>
+<ul>
+<li>原始文件只有一个整车 GLB（按英寸导出，导入 UE 后需要统一缩放）</li>
+<li>在 Blender 里拆成独立部件：车体各段、炮塔、炮管、护栏与机枪、天线</li>
+<li>拆的原则是<strong>按运动关系拆，不按材质拆</strong>：</li>
+<li>炮塔要能独立旋转 → 炮塔本体 + 护栏 + 机枪 + 天线归成一族，挂在同一个枢轴上</li>
+<li>炮管要能独立俯仰 → 单独一层，枢轴放在炮塔的耳轴位置</li>
+<li>车体只需整体运动 → 其余全部合成一族</li>
+<li>导入 UE 后对齐尺寸：缩放 1.0548，把车体长对齐真车 8.33 m</li>
+<li>履带接地微陷约 7 cm，接近真实履带压地的观感</li>
+</ul>
+<p>这一步的收益在后面才体现：<strong>没有拆分，炮塔追击视角、炮口生成点、HUD 上的炮塔指向，一个都做不了。</strong></p>
+<hr />
+<h2 id="_6">五、三层实现</h2>
+<p><strong>物理层</strong>
+UE5 没有履带物理方案，采用"履带外观 + 4 个隐藏轮"的折中。轮子参数由公式推出，不拍数字。整车参数：质量、质心、扭矩曲线、弹簧刚度。</p>
+<p><strong>操作层</strong>
+两套独立输入映射，靠"被占据 / 被放弃"事件切换。键位：W/S 油门与倒车、A/D 转向、空格手刹、左键开火。
+踩过的坑：引擎的"倒车即刹车"开关会让刹车与倒车打架。</p>
+<p><strong>规则层</strong>
+炮塔读相机臂的偏航，用恒定角速度追赶，形成"准星在前、炮口在后"的坦克手感。开火两道闸门：装填完成 + 有弹药。
+HUD 用四角方框表示相机朝向、圆环表示炮塔实际朝向，两者重合时变色；圆环的位移必须按真实投影比例换算，不能拍固定像素值。</p>
+<hr />
+<h2 id="_7">六、还没做完的</h2>
+<h3 id="1-bug">1. 相机与炮塔准星仍有耦合（已知 bug）</h3>
+<p><strong>现象</strong>：转动车体或切换视角后，炮塔准星（圆环）会跟着相机一起偏，而不是稳定反映炮塔的真实朝向。玩家看到的"炮口指向"和实际的炮弹出膛方向会对不上。</p>
+<p><strong>原因</strong>：炮塔的瞄准目标取自<strong>相机臂的局部旋转</strong>——相机和炮塔共用了一部分状态。这是设计期的耦合，不是单纯的接线错误，所以修起来不能靠补线，得改结构。</p>
+<p><strong>彻底的解法</strong>：把炮塔的瞄准目标从"某条相机臂的角度"改成<strong>世界空间的目标点</strong>，让相机和炮塔各自独立。这件事没做完，所以现在这套 HUD 只能算"能看"，不算"可信"。</p>
+<h3 id="2">2. 开火逻辑只做了最小闭环</h3>
+<p>现在只有"装填完成 + 有弹药"两道判定，缺的东西还很多：</p>
+<ul>
+<li><strong>没有炮口对准判定</strong>：实战里炮口没对准目标通常会受限或给出提示，这里按下就打</li>
+<li><strong>没有弹种切换</strong>：只有一种炮弹；真车是"默认弹 + 情境弹"，主炮四档选择是这个系统的核心决策</li>
+<li><strong>没有后坐力、炮口焰、开火时的车体晃动</strong>：现在的开火反馈只有音效和炮弹本身</li>
+<li><strong>没有命中判定与伤害</strong>：炮弹碰到就炸，不区分打到了地面、建筑还是另一辆车</li>
+<li><strong>打空之后没有补弹途径</strong>：30 发打光就没了</li>
+</ul>
+<h3 id="3">3. 剩下的</h3>
+<ul>
+<li>部位与角度伤害（对标《战地6》的炮塔 75%、车体 ≥100%、侧 150%、后 200%）</li>
+<li>炮弹初速提升（当前 60 m/s，真实穿甲弹在 1500 m/s 量级；提上去需要改用扫掠碰撞，而不是纯重叠检测）</li>
+<li>履带打断、乘员位、弹种切换</li>
+<li>相机在贴墙与复杂地形下的遮挡处理（现在会穿进几何体）</li>
+</ul>
+<hr />
+<h2 id="_8">附录</h2>
+<p><strong>关键参数</strong>
+缩放 1.0548（车体长对齐真车 8.33 m）；履带接地微陷约 7 cm；炮塔 40°/s；炮管 25°/s；装填 3.5 s；备弹 30 发；相机 FOV 80。</p>
+<p><strong>操作</strong>
+走近触发区自动上车，按 E 下车。</p>
+<hr />
+<p><img alt="骑兵连，进攻" src="thumbs/tank_intro_head.png" /></p>
+<p><em>这张图放在最后——它和正文的技术内容无关，但它才是这个 Demo 的起点。</em></p>
+</div>
+</body>
+</html>

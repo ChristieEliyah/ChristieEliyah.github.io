@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>载具拆解：9 类战场载具、4 种坦克性格、1 辆 Challenger 2</title>
+
+<style>
+:root {
+  --bg: #fafafa;
+  --panel: #ffffff;
+  --text: #1f2328;
+  --text-soft: #57606a;
+  --border: #d0d7de;
+  --accent: #0969da;
+  --accent-soft: #ddf4ff;
+  --code-bg: #f6f8fa;
+  --table-stripe: #f6f8fa;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 28px 80px;
+}
+header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+  margin-bottom: 28px;
+}
+header .meta {
+  color: var(--text-soft);
+  font-size: 13px;
+  margin-top: 4px;
+}
+h1 {
+  font-size: 28px;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+h2 {
+  font-size: 22px;
+  margin: 36px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+h3 {
+  font-size: 18px;
+  margin: 26px 0 10px;
+  color: var(--text);
+}
+h4 {
+  font-size: 16px;
+  margin: 20px 0 8px;
+}
+p { margin: 10px 0; }
+blockquote {
+  margin: 14px 0;
+  padding: 10px 16px;
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+  border-radius: 0 6px 6px 0;
+}
+blockquote p { margin: 4px 0; }
+ul, ol { padding-left: 26px; }
+li { margin: 4px 0; }
+hr {
+  border: 0;
+  border-top: 1px dashed var(--border);
+  margin: 28px 0;
+}
+code {
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
+  font-size: 13px;
+  color: #cf222e;
+}
+pre {
+  background: var(--code-bg);
+  padding: 14px 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--text);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14px;
+  background: var(--panel);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--table-stripe);
+  font-weight: 600;
+  color: var(--text);
+}
+tbody tr:nth-child(even) {
+  background: var(--table-stripe);
+}
+strong { color: var(--text); }
+em { color: var(--text-soft); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  margin-right: 4px;
+}
+.callout {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 14px 0;
+}
+.callout.warn { border-left: 4px solid #d4a72c; background: #fff8c5; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<h1 id="9-4-1-challenger-2">载具拆解：9 类战场载具、4 种坦克性格、1 辆 Challenger 2</h1>
+<h2 id="_1">结论</h2>
+<ol>
+<li>《战地6》的载具不是"多"，是"<strong>每类都有明确被克制对象</strong>"的闭环。</li>
+<li>大战场载具系统的核心矛盾：<strong>乘员模板给了 4–6 个座位，实际有效操作位只有 2 个</strong>。</li>
+<li>三款坦克游戏在同一个问题上做了三种取舍——<strong>真实感、可读性、节奏，只能取二</strong>。</li>
+<li>真车参数能直接搬进游戏的很少；<strong>值钱的是知道"动哪个参数会改变体验"</strong>。</li>
+</ol>
+<h2 id="_2">四款游戏的坦克，五个维度</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>战地6</th>
+<th>战地2042</th>
+<th>战争雷霆</th>
+<th>坦克世界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>履带 / 物理</td>
+<td>履带视觉 + 轮式物理</td>
+<td>同左，更轻快</td>
+<td>逐轮悬挂仿真</td>
+<td>数值化机动</td>
+</tr>
+<tr>
+<td>炮塔转速</td>
+<td>有加速度，S3 后上调</td>
+<td>偏快</td>
+<td>按真车还原</td>
+<td>固定数值档</td>
+</tr>
+<tr>
+<td>视野与相机</td>
+<td>第三人称追尾</td>
+<td>第三人称</td>
+<td>车长 / 炮手双镜位</td>
+<td>第三人称 + 数值视野</td>
+</tr>
+<tr>
+<td>伤害模型</td>
+<td>角度简化：炮塔 75%、车体 ≥100%、侧 150%、后 200%</td>
+<td>部位倍率、血条化</td>
+<td>装甲等效 + 跳弹角 + 乘员/模块损伤</td>
+<td>血条 + 穿深检定</td>
+</tr>
+<tr>
+<td>信息呈现</td>
+<td>极简 HUD，靠听声辨位</td>
+<td>极简 HUD</td>
+<td>信息量最大</td>
+<td>信息最全，可预判</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>战争雷霆、坦克世界两列为机制层面描述，不涉及具体版本数值——版本更迭频繁，写死数字会过期。</p>
+</blockquote>
+<hr />
+<h2 id="_3">一、系统设计层面</h2>
+<p><strong>座位数由"需要多少种不同决策"决定，不由人数决定。</strong>
+《战地6》的载具岗位分三层：动力层（驾驶员）／主炮层（炮手、车长）／副武器层（机枪位）。三层之外再加座位，只是重复劳动。</p>
+<p><strong>核心矛盾：6 座载具实际只有 2 个有效操作位。</strong>
+乘员模板是为多人协同准备的，实际体验是单人分时操作——玩家要在一辆车里同时扮演司机、炮手和车长。这是刻意保留的取舍：保住多人协同的可能性，代价是单人玩家的操作负担。</p>
+<p><strong>双弹药系统。</strong>
+每辆主战载具有"默认弹 + 情境弹"。MBT 的 120mm 有四档：默认榴弹、反步兵、穿甲、制导。这是用"<strong>弹药切换</strong>"代替"换载具"——把决策压进玩家每次出击的开头，而不是让他回基地换车。</p>
+<p><strong>装备槽把反载具手段下放。</strong>
+这条等于承认：载具的克制关系不该只由载具解决。步兵能拿到反载具装备，载具才有"被绕侧"的恐惧。</p>
+<p><strong>生态位克制是闭环。</strong>
+地面五类、空中三类、水面一类，每一类都有明确的被克制对象。这才是"9 类载具"这个数字真正的意义。</p>
+<hr />
+<h2 id="_4">二、四款游戏的坦克，四种取向</h2>
+<p><strong>战地6：可读性与节奏优先。</strong>
+生命值明确（1200），伤害按部位和角度简化成四档，玩家不需要背装甲数据就能判断"该打哪、扛不扛得住"。代价是真实性——62 吨的坦克在这个框架里更像一个"重装单位"，而不是一台精密机器。</p>
+<p><strong>战地2042：同样偏可读性，但更轻。</strong>
+载具靠平板召唤，机动更轻快，部位倍率更粗。它的问题是载具像"一件装备"，而不是战场上的一个角色。</p>
+<p><strong>战争雷霆：真实感优先。</strong>
+装甲等效厚度、跳弹角、乘员与模块独立损伤（弹药架、履带、发动机都能单独坏）。每一发炮弹的因果链最完整。代价是门槛与节奏——单局信息量大，容错率低。</p>
+<p><strong>坦克世界：数值可读性优先。</strong>
+把真车参数翻译成透明数值：视野、隐蔽、精度、穿深、装填时间都是可预判的数字。代价是与真实物理脱钩，换到的是最稳定的节奏和最低的理解成本。</p>
+<p><strong>三者在回答同一个问题。</strong>
+真实感、可读性、节奏三者不能同时满足，只能选两个。拆解的价值不是判断谁更对，而是看清它把取舍放在了哪里。</p>
+<hr />
+<h2 id="2">三、现实中的挑战者 2</h2>
+<p><strong>为什么选它：因为帅。</strong>
+选型理由很朴素——楔形炮塔和车体线条是现役主战坦克里最耐看的。
+选定之后回头补功课，才发现它恰好是唯一仍使用线膛炮（120mm L30A1）的西方主战坦克——
+线膛炮决定了它的弹药与射击方式与同类完全不同，技术选择反过来决定了玩法。</p>
+<p><strong>尺寸与重量</strong>（后面那篇文章的物理参数就来自这里）</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>车体长</td>
+<td>8.33 m</td>
+</tr>
+<tr>
+<td>含炮管全长</td>
+<td>11.55 m</td>
+</tr>
+<tr>
+<td>全宽</td>
+<td>3.52 m</td>
+</tr>
+<tr>
+<td>到炮塔顶</td>
+<td>约 2.5 m</td>
+</tr>
+<tr>
+<td>战斗全重</td>
+<td>约 62.5 t</td>
+</tr>
+<tr>
+<td>长 : 宽 : 高</td>
+<td>2.37 : 1 : 0.71</td>
+</tr>
+</tbody>
+</table>
+<p><strong>动力与转向</strong>
+帕金斯 CV12 柴油机 1200 hp，公路极速 56 km/h。
+履带车有三种转向：差速转向、中性转向、<strong>原地转向（pivot）</strong>。能不能原地转是坦克手感的分水岭——它让"车体朝向"和"炮口朝向"可以解耦。</p>
+<p><strong>火控：猎歼（Hunter-Killer）</strong>
+车长用独立观瞄搜索并指定目标，炮手接战；车长在炮手开火时已经在找下一个。这是"车组分工"在物理层面的体现，也解释了为什么单人操控必然有信息损失。</p>
+<p><strong>车组四人：车长、炮手、装填手、驾驶员。</strong>
+人工装填与自动装弹机（T-72、勒克莱尔）是两种设计哲学，不是先进落后。自动装弹机省一个人，代价是弹药架位置固定、乘员减少、被击中时风险集中。</p>
+<p><strong>装甲</strong>
+乔巴姆 / 多切斯特复合装甲。实战中有过承受大量单兵反坦克武器后仍能撤离的记录——生存性设计的价值不在于"打不穿"，而在于"打穿了还能走"。</p>
+<p><strong>真车数据里，能搬进游戏的与必须改写的</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>可直接搬</td>
+<td>尺寸、极速、车组人数、炮塔转速量级</td>
+<td>这些是玩家能感知、且不影响平衡的</td>
+</tr>
+<tr>
+<td>必须改写</td>
+<td>装甲</td>
+<td>游戏里必须变成可读的数值（等效厚度或血条）</td>
+</tr>
+<tr>
+<td>必须改写</td>
+<td>装填</td>
+<td>真实装填远长于游戏节奏能接受的长度</td>
+</tr>
+<tr>
+<td>必须改写</td>
+<td>重量</td>
+<td>62.5 t 在物理引擎里会带来大量调参代价</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_5">四、九类载具档案</h2>
+<table>
+<thead>
+<tr>
+<th>载具</th>
+<th>驾驶特性（一句话）</th>
+<th>战斗定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>两座摩托</td>
+<td>极速最高、几乎无防护</td>
+<td>快速穿插、自爆</td>
+</tr>
+<tr>
+<td>轻型运输（5 座）</td>
+<td>转向灵活、载员多</td>
+<td>小队赶路、边缘防空</td>
+</tr>
+<tr>
+<td>移动防空 MAA</td>
+<td>加速快、车身轻</td>
+<td>专职防空，也可平射压制</td>
+</tr>
+<tr>
+<td>步兵战车 IFV</td>
+<td>六座多武器、机动均衡</td>
+<td>步战协同</td>
+</tr>
+<tr>
+<td>重装坦克 MBT</td>
+<td>重、稳、炮塔有加速度</td>
+<td>推线抗线，必须步兵伴随</td>
+</tr>
+<tr>
+<td>运输直升机</td>
+<td>载员多、机动笨重</td>
+<td>兵力投送</td>
+</tr>
+<tr>
+<td>武装直升机</td>
+<td>悬停稳定、火力持续</td>
+<td>空对地，被固定翼克制</td>
+</tr>
+<tr>
+<td>战斗机</td>
+<td>速度最快、讲究能量管理</td>
+<td>制空</td>
+</tr>
+<tr>
+<td>攻击艇</td>
+<td>多武器分岗、水面机动</td>
+<td>海战滩头</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_6">附录：数据出处与可信度</h2>
+<ul>
+<li><strong>《战地6》</strong>：官方补丁说明（S3 / S4）、社区 Wiki、多篇游戏媒体。参数以补丁说明为准。</li>
+<li><strong>《战地2042》</strong>：官方版本说明。</li>
+<li><strong>《战争雷霆》《坦克世界》</strong>：机制层面描述，不写具体版本数值。</li>
+<li><strong>挑战者 2</strong>：公开资料。尺寸、极速、车组人数为常见引用值；装甲细节属保密内容，文中只做定性描述。</li>
+</ul>
+</div>
+</body>
+</html>
