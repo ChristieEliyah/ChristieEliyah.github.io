@@ -546,50 +546,29 @@
       <div class="art-detail">
         <div style="font-size:13px; color:var(--text-secondary); line-height:1.9; max-width:760px;">
 
-          <!-- 🎬 录屏演示 -->
-          <p style="font-size:15px; font-weight:700; color:var(--text); margin:0 0 12px;">🎬 当前版本 v0.42 · 录屏演示（8.12 实机）</p>
+          <!-- 录屏演示 -->
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:0 0 12px;">录屏演示</p>
           <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
             <iframe src="//player.bilibili.com/player.html?bvid=BV13jgG6jEuW&page=1&high_quality=1&autoplay=0" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0; border-radius:6px;" allowfullscreen></iframe>
           </div>
-          <p style="font-size:12px; color:var(--text-muted); margin:8px 0 24px;">B站高清 · 95s · 涵盖移动 / 射击 / 命中反馈 / 小球靶场 / 补弹 / 计分计时全流程</p>
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:0 0 14px;">设计文档摘要</p>
 
-          <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:14px;">📐 设计文档摘要</p>
+          <p style="margin-top:20px;"><b>项目定位：</b>UE5 FPS 训练靶场 Demo，参考 COD 新手教程关卡设计，纯蓝图开发。在 XL_FPSPack 资产包基础上做系统整合与定制。</p>
 
-          <p><b>项目定位：</b>UE5 FPS 训练靶场 Demo，参考 COD 新手教程关卡设计，纯蓝图开发。从 XL_FPSPack 资产包基础上进行系统化整合与定制，覆盖输入层→逻辑层→表现层的完整链路。</p>
-
-          <p style="margin-top:12px;"><b>设计目标：</b></p>
+          <p style="margin-top:12px;"><b>核心系统：</b></p>
           <ul style="margin:6px 0; padding-left:20px;">
-            <li>即时命中（Hitscan）+ 完整击中反馈链路</li>
-            <li>开火 / 瞄准 / 换弹 / 弹药管理</li>
-            <li>分层动画系统（BlendSpace 无缝过渡）</li>
-            <li>武器基类 + 蓝图接口，可扩展架构</li>
+            <li><b>玩家</b>：移动、视角、开镜灵敏度。输入统一走 Enhanced Input，不混用旧输入系统。</li>
+            <li><b>武器</b>：基类管逻辑、子类管数据。换弹交给动画通知，不另写计时器。</li>
+            <li><b>射击反馈</b>：射线判定命中后按物理材质分流，配弹壳抛掷、弹孔贴花与音效。</li>
           </ul>
 
-          <p style="margin-top:12px;"><b>核心系统概览：</b></p>
-          <table style="width:100%; border-collapse:collapse; font-size:13px; margin:6px 0;">
-            <tr style="background:var(--bg-muted);"><th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">系统模块</th><th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">核心内容</th></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);">玩家角色</td><td style="padding:6px 10px; border:1px solid var(--border);">Character → BP_FPSPlayer，5 种移动状态、FOV 切换、鼠标灵敏度控制</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);">武器系统</td><td style="padding:6px 10px; border:1px solid var(--border);">BP_WeaponBase 基类 + BP_VIRTUS 突击步枪（300 BLK），弹匣 30 发，射速 600 RPM，换弹 2.5s</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);">输入系统</td><td style="padding:6px 10px; border:1px solid var(--border);">6 个 Enhanced Input Action + WASD 鼠标全映射</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);">命中检测</td><td style="padding:6px 10px; border:1px solid var(--border);">LineTrace 射线 → 物理材质判定 → 多表面响应（血液/混凝土/玻璃/金属/木头/水等）</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);">靶子系统</td><td style="padding:6px 10px; border:1px solid var(--border);">BP_TargetDummy，100 HP，Timeline 击倒动画 + 自动复位</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);">动画系统</td><td style="padding:6px 10px; border:1px solid var(--border);">玩家 ABP + 武器 ABP + 2 个 BlendSpace + 换弹 AnimNotify</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);">弹壳系统</td><td style="padding:6px 10px; border:1px solid var(--border);">物理抛壳 + 碰撞音效 + 自动销毁</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);">HUD</td><td style="padding:6px 10px; border:1px solid var(--border);">Health_HUD 血量显示 + 弹药 HUD_Ammo 实时弹药计数 + 准星 Widget</td></tr>
-          </table>
-
-          <p style="margin-top:12px;"><b>技术架构：</b>分层设计 — Input 层（Enhanced Input）→ Controller 层（PlayerController）→ Character 层（BP_FPSPlayer + 状态机）→ Weapon 层（BP_WeaponBase → BP_VIRTUS）→ Feedback 层（VFX / SFX / 物理）。蓝图接口 BI_Fire 实现武器与玩家的解耦通讯。</p>
-
-          <p style="margin-top:22px; font-size:15px; font-weight:700; color:var(--text);">🖥 实机运行画面（UE5 编辑器）</p>
+          <p style="margin-top:22px; font-size:15px; font-weight:700; color:var(--text);">实机运行画面（UE5 编辑器）</p>
           <div style="background:#fafafa; border-radius:8px; padding:14px; margin-top:8px;">
             <img src="thumbs/fps_editor.jpg" alt="UE5 编辑器中运行 FPS 靶场 Demo 的实机画面" style="width:100%; border-radius:6px; display:block;">
           </div>
-          <p style="font-size:12px; color:var(--text-muted); margin:8px 0 0;">左侧实机画面：第一人称持枪 + 蓝球靶子系统 + HUD（实时弹药 18/180、按 F 补弹、射击计分提示）；右侧为 World Settings 世界设置面板。当前靶场为自制测试场景，用于验证射击、命中反馈与计分链路。</p>
+          <p style="font-size:12px; color:var(--text-muted); margin:8px 0 0;">靶场是自制测试场景，用来验证射击、命中反馈和计分。</p>
 
-          <p style="margin-top:14px; font-size:12px; color:var(--text-muted);">项目资产统计：933 个文件 | 9 个蓝图类 | 2 个接口 | 3 个枚举 | 38 套骨骼动画 | 35 个 Niagara VFX | 8 个 Sound Cue | 31 个 Sound Wave</p>
-
-          <a href="https://christieeliyah.github.io/fps-design-doc.html" target="_blank" rel="noopener" style="display:inline-block; margin-top:18px; padding:8px 18px; background:var(--text); color:#fff; border-radius:5px; text-decoration:none; font-size:13px; font-weight:600;">📄 查看完整设计文档 →</a>
-          <a href="https://christieeliyah.github.io/fps-update-log.html" target="_blank" rel="noopener" style="display:inline-block; margin-top:18px; margin-left:8px; padding:8px 18px; background:#fff; color:var(--text); border:1px solid var(--border); border-radius:5px; text-decoration:none; font-size:13px; font-weight:600;">📜 查看开发日志 v0.1→v0.42 →</a>
+          <a href="https://christieeliyah.github.io/fps-design-doc.html" target="_blank" rel="noopener" style="display:inline-block; margin-top:18px; padding:8px 18px; background:var(--text); color:#fff; border-radius:5px; text-decoration:none; font-size:13px; font-weight:600;">查看完整设计文档 →</a>
         </div>
       </div>
     </details>
@@ -623,7 +602,7 @@
       <div class="art-detail">
         <div style="font-size:13px; color:var(--text-secondary); line-height:1.9; max-width:760px;">
 
-          <p style="font-size:15px; font-weight:700; color:var(--text); margin:0 0 12px;">🎬 实机演示 · 走近上车 → 驾驶 → 炮塔瞄准（64s）</p>
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:0 0 12px;">实机演示 · 走近上车 → 驾驶 → 炮塔瞄准（64s）</p>
           <video controls preload="metadata" poster="thumbs/tank_demo.jpg" style="width:100%; border-radius:6px; display:block; background:#000;">
             <source src="videos/tank-demo.mp4" type="video/mp4">
             您的浏览器不支持视频播放，可<a href="videos/tank-demo.mp4">点此下载</a>观看。
@@ -632,7 +611,7 @@
 
           <p><b>项目定位：</b>在已有的 UE5 FPS Demo 中扩展载具玩法——目标是一辆"走到旁边能上车、能开、能下车"的挑战者主战坦克（车长 786cm / 高 294cm）。不替换原有 FPS 玩法，重点验证一件事：<b>载具手感是怎么被物理参数决定的</b>。</p>
 
-          <p style="margin-top:22px; font-size:15px; font-weight:700; color:var(--text);">🖥 实机运行画面（UE5 编辑器）</p>
+          <p style="margin-top:22px; font-size:15px; font-weight:700; color:var(--text);">实机运行画面（UE5 编辑器）</p>
           <div style="background:#fafafa; border-radius:8px; padding:14px; margin-top:8px;">
             <img src="thumbs/tank_editor.jpg" alt="在 UE5 编辑器中驾驶挑战者坦克的实机画面" style="width:100%; border-radius:6px; display:block;">
           </div>
@@ -825,7 +804,7 @@
               <img src="thumbs/ae_zmd_logo.png" alt="终末地Logo展示动画">
             </div>
             <div class="art-info">
-              <div class="art-title">🎬 AE 动效 · Logo 展示与 UI 动效</div>
+              <div class="art-title">AE 动效 · Logo 展示与 UI 动效</div>
               <div class="art-desc">《明日方舟：终末地》Logo 展示动画 · 《英雄联盟手游》匹配确认动效复原</div>
               <div class="expand-hint">点击展开查看视频 ▼</div>
             </div>
