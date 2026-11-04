@@ -34,7 +34,7 @@
   th{background:#f7f8fa; font-weight:600;}
   tr:nth-child(even) td{background:#fbfbfc;}
   .lead{color:var(--text-muted); font-size:14px; margin-bottom:28px;}
-  b,strong{font-weight:600; color:#161a1f;}
+  b,strong{font-weight:700; color:#000;}
   code{
     font-family:Consolas,Monaco,monospace; font-size:13px; background:#f4f5f7;
     padding:1px 5px; border-radius:3px;
@@ -69,6 +69,7 @@
 <h2>三个系统</h2>
 
 <h3>3C：角色 / 相机 / 操控</h3>
+<p><b>3C 是 Character、Camera、Control 的缩写</b>，动作和射击类游戏谈手感时通常先拆这三块：<b>角色</b>怎么动、<b>相机</b>怎么跟、<b>操控</b>怎么响应。这三块里任何一块别扭，玩家只会说「这游戏手感差」，而且说不清差在哪——所以做的时候也要按这三块分别调，不能混在一起试。</p>
 <p><b>角色</b>从 Character 派生，相机和手臂骨骼网格直接挂在默认组件上，位移交给 CharacterMovement，没有自己写移动逻辑。</p>
 <p><b>相机</b>的 FOV 用 <code>FInterpTo</code> 插值收窄，不硬切。硬切看着像镜头跳了一下，玩家会以为卡帧。开镜灵敏度单独给一个变量，跟着瞄准状态走——不这么做，放大之后手感会突然变快，压枪全乱。</p>
 <p><b>操控</b>分三档速度：步行 <b>265</b>、瞄准移动 <b>400</b>、冲刺 <b>600</b>。切换靠一个四状态枚举（Idle / Walk / Sprint / ADS）改写 MaxWalkSpeed，不用叠 buff，也不用改输入映射。输入统一走 <b>Enhanced Input</b>，一张 IMC 管七个动作：Fire、Aim、Move、Look、Reload、Run、AddAmmo。</p>
