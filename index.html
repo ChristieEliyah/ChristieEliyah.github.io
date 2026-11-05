@@ -529,9 +529,9 @@
         <div class="info">
           <div class="name">
             UE5 FPS 射击游戏
-            <span class="badge">★ 主力Demo</span>
+            <span class="badge">主力 Demo</span>
           </div>
-          <div class="desc">基于 UE 5.8 从零搭建的 FPS 训练靶场 Demo。MCX Virtus 突击步枪 + 38 套动画 + Enhanced Input + 蓝图状态机 + 设计文档。▼ 展开查看设计文档</div>
+          <div class="desc">UE 5.8 纯蓝图做的 FPS 训练靶场。一把 MCX Virtus、一套命中反馈、一个靶场循环。这个项目解决的问题是：把"开火到命中"的每一环拆开，让每一环都有明确的响应时间。</div>
           <div class="tags">
             <span class="tag">UE 5.8</span>
             <span class="tag">纯蓝图</span>
@@ -582,9 +582,9 @@
         <div class="info">
           <div class="name">
             UE5 挑战者坦克 · 载具驾驶与交互
-            <span class="badge">★ 载具实战</span>
+            <span class="badge">载具</span>
           </div>
-          <div class="desc">在 FPS Demo 中集成一辆可驾驶主战坦克：Chaos Vehicles 物理 + 增强输入系统 + 走近自动上车 / E 键下车。用质量、质心、引擎转速三个物理参数调出"重车感"，并以 A/B 对比录屏验证重心对翻车的影响。▼ 展开查看实现与调参</div>
+          <div class="desc">在 FPS Demo 里加了一辆能开的主战坦克。重点不是"做了辆车"，是把"重车感"拆成质量、质心、转速三个参数，再用同一弯道的 A/B 录屏验证哪个参数真的在起作用。</div>
           <div class="tags">
             <span class="tag">Chaos Vehicles</span>
             <span class="tag">增强输入</span>
@@ -592,8 +592,8 @@
             <span class="tag">手感调参</span>
           </div>
           <div style="margin-top:9px; padding-top:9px; border-top:1px dashed var(--border); font-size:12.5px; line-height:1.9;">
-            <a href="vehicle-breakdown.html" onclick="event.stopPropagation();" style="color:var(--tag-text); text-decoration:underline; text-underline-offset:2px;">📄 《载具拆解：9 类战场载具、4 种坦克性格、1 辆 Challenger 2》</a><br>
-            <a href="tank-implementation.html" onclick="event.stopPropagation();" style="color:var(--tag-text); text-decoration:underline; text-underline-offset:2px;">🔧 《用参数驯服一辆 Challenger 2：实测数据与踩坑记录》</a>
+            <a href="vehicle-breakdown.html" onclick="event.stopPropagation();" style="color:var(--tag-text); text-decoration:underline; text-underline-offset:2px;">《载具拆解：9 类战场载具、4 种坦克性格、1 辆 Challenger 2》</a><br>
+            <a href="tank-implementation.html" onclick="event.stopPropagation();" style="color:var(--tag-text); text-decoration:underline; text-underline-offset:2px;">《用参数驯服一辆 Challenger 2：实测数据与踩坑记录》</a>
           </div>
         </div>
         <div class="arrow">▼</div>
@@ -602,14 +602,14 @@
       <div class="art-detail">
         <div style="font-size:13px; color:var(--text-secondary); line-height:1.9; max-width:760px;">
 
-          <p style="font-size:15px; font-weight:700; color:var(--text); margin:0 0 12px;">实机演示 · 走近上车 → 驾驶 → 炮塔瞄准（64s）</p>
+          <p style="font-size:15px; font-weight:700; color:var(--text); margin:0 0 12px;">走近上车 → 驾驶 → 炮塔瞄准（64s）</p>
           <video controls preload="metadata" poster="thumbs/tank_demo.jpg" style="width:100%; border-radius:6px; display:block; background:#000;">
             <source src="videos/tank-demo.mp4" type="video/mp4">
             您的浏览器不支持视频播放，可<a href="videos/tank-demo.mp4">点此下载</a>观看。
           </video>
-          <p style="font-size:12px; color:var(--text-muted); margin:8px 0 24px;">完整流程：FPS 角色行走 → 走进触发区自动上车 → WASD 驾驶（质量 8000 / 质心 Z=-100 的重车感）→ 炮塔瞄准。录制环境为 UE5 编辑器 PIE 模式，右下为弹药 HUD。</p>
+          <p style="font-size:12px; color:var(--text-muted); margin:8px 0 24px;">行走 → 走进触发区自动上车 → WASD 驾驶（质量 9000 / 质心 −100）→ 炮塔瞄准。录制环境是编辑器 PIE，右下为弹药 HUD。</p>
 
-          <p><b>项目定位：</b>在已有的 UE5 FPS Demo 中扩展载具玩法——目标是一辆"走到旁边能上车、能开、能下车"的挑战者主战坦克（车长 786cm / 高 294cm）。不替换原有 FPS 玩法，重点验证一件事：<b>载具手感是怎么被物理参数决定的</b>。</p>
+          <p>在已有的 FPS Demo 上塞了一辆能开的挑战者 2，目的只有一个：搞清楚"重车感"到底是哪几个参数给的。</p>
 
           <p style="margin-top:22px; font-size:15px; font-weight:700; color:var(--text);">实机运行画面（UE5 编辑器）</p>
           <div style="background:#fafafa; border-radius:8px; padding:14px; margin-top:8px;">
@@ -617,38 +617,19 @@
           </div>
           <p style="font-size:12px; color:var(--text-muted); margin:8px 0 0;">车长视角驾驶画面：前景为玩家操控的挑战者坦克（炮塔 / 车长塔 / 天线），左后方是作为对照的第二辆坦克，中央绿色圆环为瞄准准星，右下为弹药 HUD。右侧大纲面板可见本场景由 <b>Tank_CurrentSpawner</b>、<b>Tank_Base_C</b>、<b>BP_UI</b> 与关卡光照体系共同构成。</p>
 
-          <p style="margin-top:14px;"><b>三层实现：</b></p>
-          <table style="width:100%; border-collapse:collapse; font-size:13px; margin:6px 0;">
-            <tr style="background:var(--bg-muted);">
-              <th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">层级</th>
-              <th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">技术方案</th>
-            </tr>
-            <tr>
-              <td style="padding:6px 10px; border:1px solid var(--border);">物理层</td>
-              <td style="padding:6px 10px; border:1px solid var(--border);">Chaos Vehicles —— WheeledVehiclePawn 作父类 + ChaosVehicleWheel 轮子蓝图（前/后轮半径 74cm，按车高 ×0.25 反推离地间隙）+ ChaosWheeledVehicleMovementComponent 移动组件；FPS 项目原本不带这套配置，需先启用插件与物理子步进</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 10px; border:1px solid var(--border);">输入层</td>
-              <td style="padding:6px 10px; border:1px solid var(--border);">增强输入系统：油门 W / 转向 A·D / 刹车 S / 手刹 Space 四个轴输入 + 下车 E 一个布尔输入；用「事件 被占据 / 被取消占据」控制映射上下文的激活与移除，避免坦克输入与 FPS 输入同时生效</td>
-            </tr>
-            <tr>
-              <td style="padding:6px 10px; border:1px solid var(--border);">交互层</td>
-              <td style="padding:6px 10px; border:1px solid var(--border);">走进盒体触发区自动上车（Possess 自身）+ E 键下车（控制权交还角色、自动松油门、拉手刹停稳、并把角色移到车侧避免卡进车体）</td>
-            </tr>
-          </table>
+          <p style="margin-top:14px;">物理用 Chaos Vehicles：WheeledVehiclePawn 做父类，轮子是两对隐藏的物理轮，外面套一层履带外观。整车按真车 1.0548 缩放对齐到车长 8.3m，轮子半径 74cm 是从车高反推出来的离地间隙。项目原本没开这套配置，得先启插件再给物理加子步进，否则车会陷进地面。</p>
 
-          <p style="margin-top:14px;"><b>手感调参（三个核心物理参数）：</b></p>
-          <ul style="margin:6px 0; padding-left:20px;">
-            <li><b>质量 = 8000</b> —— 给出重车该有的惯性，起步和刹车都有分量</li>
-            <li><b>质心偏移 Z = -100</b> —— 重心压低，急转弯不翻车</li>
-            <li><b>最大引擎转速 = 4500</b> —— 刻意限制极速，贴合主战坦克的移动节奏</li>
-          </ul>
+          <p>输入是独立的一套映射上下文，靠"被占据 / 被取消占据"切换。不这么做，坦克的油门会和角色的 WASD 打架——这是我踩过的坑，改了两天才想明白问题不在节点连错。</p>
 
-          <p style="margin-top:14px;"><b>验证方法（A/B 对比）：</b>把质心偏移改成 +150 跑一段（急转必翻），再改回 -100 跑一段（稳定通过），两段录屏对照；同时用 <b>chaos.DebugDraw.Enabled 1</b> 观察轮子受力、悬挂形变与重心位置。</p>
+          <p>相机在车后 8.75m、上方 5.76m、俯角 12°。这个位置试了三版：贴太近看不见履带和炮塔，太远又没有重量感；俯角低于 10° 时看不出炮塔朝哪，高于 15° 地面被压扁、距离判断会失准。</p>
 
-          <p style="margin-top:14px;"><b>配套分析：</b>同步输出《战地6 载具系统拆解》，从载具分类、驾驶参数、上下车与维修机制等维度拆解商业 FPS 的载具设计，作为自己这套 Demo 的设计参照。</p>
+          <p>交互是走近触发区自动上车，E 键下车。下车时要把角色挪到车侧——直接放原地会被车体挤住。</p>
 
-          <p style="margin-top:14px;"><b>收获：</b>载具手感不是"感觉对了就行"，而是质量 / 质心 / 悬挂 / 输入响应几组参数叠加的结果。能把每个参数改动对应的体验后果讲清楚，才能和程序在同一套语言里讨论设计。</p>
+          <p style="margin-top:14px;">三个参数决定它的性格：整车质量 <b>9000</b>（起步和刹车的惯性全在这上面）、质心 Z 偏移 <b>−100</b>（压住重心，急转不翻）、引擎转速上限 <b>4500</b>（刻意压极速，让节奏像坦克而不是跑车）。</p>
+
+          <p style="margin-top:14px;">验证没靠感觉。同一个弯道、同一入弯速度跑两遍：质心 +150 时急转必翻，−100 时稳定通过，两段录屏摆在一起看。翻车那一下我才确认，手感是参数组合出来的，不是"调到对了"。</p>
+
+          <p style="margin-top:14px;">没做完的：履带没有独立受力，炮塔是恒定 40°/s（真车有加速段），炮弹用了简化弹道，命中伤害也没接。这些留到下一版。</p>
 
         </div>
       </div>
@@ -665,7 +646,7 @@
             OpenGL 射击小游戏
             <span class="badge gray">Demo</span>
           </div>
-          <div class="desc">计算机图形学课程设计。基于 C++ 与 OpenGL 从零搭建 3D 第一人称射击游戏。包含完整渲染管线、自写 GLSL Shader（球/枪/粒子/房间/阴影/太阳）、Assimp 模型加载、粒子系统、阴影投射、Phong 光照模型。▼ 展开查看 3D 课程作品 + AK 武器模型</div>
+          <div class="desc">计算机图形学课设：C++ 和 OpenGL 从零写一个第一人称射击，没有引擎。渲染管线、GLSL 着色器、模型加载、碰撞和计分全部自己写。当时的限制是没有现成的相机与碰撞组件，所以第一人称视角和射线检测都得手算。</div>
           <div class="tags">
             <span class="tag">C++</span>
             <span class="tag">OpenGL</span>
@@ -681,58 +662,29 @@
       <div class="art-detail">
         <div style="font-size:13px; color:var(--text-secondary); line-height:1.9; max-width:760px;">
 
-          <!-- 项目概述 -->
-          <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:10px;">📂 项目概述</p>
-          <p>一个 3D 第一人称射击 Demo：玩家在盒子靶场移动、瞄准、射击动态小球目标。涉及完整渲染管线、自写 GLSL Shader、Assimp 模型加载、粒子系统、Phong 光照、阴影映射、透明度混合。</p>
+          <p>计算机图形学的课设：C++ + OpenGL 从零写一个第一人称射击，没有引擎。<br>玩家在盒子靶场里移动、瞄准、打移动的小球，血量和计分都在界面上。</p>
 
-          <!-- 模块架构 -->
-          <p style="font-size:15px; font-weight:700; color:var(--text); margin:20px 0 10px;">⚙️ OOP 模块拆分</p>
-          <table style="width:100%; border-collapse:collapse; font-size:13px;">
-            <tr style="background:var(--bg-muted);"><th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">模块类</th><th style="padding:6px 10px; text-align:left; border:1px solid var(--border);">职责</th></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);"><b>Model / Shader / World</b></td><td style="padding:6px 10px; border:1px solid var(--border);">模型管理类 · 着色器编译 · 世界容器</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);"><b>BallManager</b></td><td style="padding:6px 10px; border:1px solid var(--border);">小球管理类 · 动态生成 / 销毁</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);"><b>Camera</b></td><td style="padding:6px 10px; border:1px solid var(--border);">摄像机类 · 第一人称视角 + Keyboard / Mouse 输入</td></tr>
-            <tr><td style="padding:6px 10px; border:1px solid var(--border);"><b>Player / Main</b></td><td style="padding:6px 10px; border:1px solid var(--border);">交互管理类 · 玩家状态机 + 游戏循环</td></tr>
-          </table>
+          <p>渲染管线自己搭：Assimp 加载模型，着色器全部手写 GLSL（球、枪、粒子、房间、阴影、太阳），Phong 光照 + 阴影映射 + 透明度混合。</p>
 
-          <!-- 实机演示 + 项目结构 -->
-          <p style="font-size:15px; font-weight:700; color:var(--text); margin:20px 0 10px;">🎯 实机演示 & 项目结构</p>
+          <p>代码按职责拆成几块：Model / Shader / World 管资源与着色器编译，BallManager 管小球的生成销毁，Camera 管第一人称视角，Player / Main 跑状态机和主循环。拆成这样是因为第一版全塞在 main 里，改一个光照参数要翻两百行。</p>
 
-          <p style="font-size:13px; color:var(--text); margin:4px 0 8px; font-weight:600;">实机画面（盒子靶场 / AK-47 / 移动小球）</p>
+          <p style="font-size:13px; color:var(--text); margin:24px 0 8px; font-weight:600;">实机画面（盒子靶场 / AK-47 / 移动小球）</p>
           <div style="background:#fafafa; border-radius:8px; padding:14px; margin:0 0 18px;">
             <img src="thumbs/fps_gameplay.jpg" alt="OpenGL 射击小游戏实机画面：盒子靶场、AK-47 武器、移动小球目标、HUD" style="width:100%; border-radius:6px; display:block;">
           </div>
 
-          <p style="font-size:13px; color:var(--text); margin:4px 0 8px; font-weight:600;">Visual Studio 项目结构（cpp / head 文件清单）</p>
+          <p style="font-size:13px; color:var(--text); margin:4px 0 8px; font-weight:600;">Visual Studio 项目结构</p>
           <div style="background:#fafafa; border-radius:8px; padding:14px; margin:0 0 8px;">
             <img src="thumbs/opengl_solution.jpg" alt="Visual Studio 解决方案资源管理器：Shoot Game 项目的 cpp 与 head 文件分布" style="width:100%; border-radius:6px; display:block;">
           </div>
 
-          <!-- 核心能力 -->
-          <p style="font-size:15px; font-weight:700; color:var(--text); margin:20px 0 10px;">🎮 已实现核心系统</p>
-          <ul style="margin:6px 0 0; padding-left:20px;">
-            <li><b>场景搭建</b>：盒子靶场 · 天空盒 · 简易太阳 · 地形 + 静态道具</li>
-            <li><b>动态模型</b>：点击鼠标抖动的武器 · R 键换弹的弹匣 · 移动小球</li>
-            <li><b>第一人称控制</b>：WASD 移动 · 鼠标视角 · 空格跳跃</li>
-            <li><b>射击系统</b>：左键射击 · 实时碰撞检测 · 弹药消耗 · R 换弹</li>
-            <li><b>游戏状态</b>：生命值 · 得分 · 时间显示 · 计分系统</li>
-            <li><b>光照与阴影</b>：定向光 + 点光源 · Phong 光照模型 · 阴影映射 · 漫反射/镜面反射贴图 · 透明度混合</li>
-            <li><b>武器模型</b>：使用 Blender 建模 AK-47 低聚模型，通过 Assimp 加载到场景中</li>
-          </ul>
+          <p>能玩的部分：WASD 移动、鼠标转视角、空格跳；左键射击带实时碰撞检测，R 换弹，血量和得分都在 HUD 上；打的是自己会动的小球，打掉一个补一个。</p>
 
-          <!-- AK47 模型展示 -->
-          <p style="font-size:15px; font-weight:700; color:var(--text); margin:22px 0 10px;">🔫 Blender 建模作品 · AK-47 低聚模型</p>
-          <p style="font-size:12px; color:var(--text-muted); margin:0 0 8px;">课程作品 · Blender 基础建模 · 输出三角形网格 + UV 展开 · Assimp 加载到 OpenGL 场景</p>
+          <p style="font-size:13px; color:var(--text); margin:24px 0 8px; font-weight:600;">AK-47 低模（Blender 自建，UV 展开后由 Assimp 载入）</p>
           <div style="background:#fafafa; border-radius:8px; padding:14px; margin-top:8px;">
             <img src="thumbs/ak47_basic.jpg" alt="AK-47 Blender 基础模型渲染图" style="width:100%; border-radius:6px; display:block;">
           </div>
 
-          <!-- 参考模型 (折叠收纳) -->
-          <!-- (略：实物参考资料图已隐去，避免视觉冗余) -->
-
-          <!-- 课程背景 -->
-          <a href="#" target="_blank" rel="noopener" style="display:inline-block; margin-top:18px; padding:8px 18px; background:var(--text); color:#fff; border-radius:5px; text-decoration:none; font-size:13px; font-weight:600; opacity:0.5; cursor:not-allowed;">📑 《3D程序设计基础》课程报告 →</a>
-          <p style="font-size:11px; color:var(--text-muted); margin-top:6px;">（课程报告原文已精简融入本页表格 / 可执行 Demo 在 F:\计算机图形学射击小游戏\）</p>
         </div>
       </div>
     </details>
@@ -878,7 +830,7 @@
     <div class="content">
 
       <div class="game-category">
-        <div class="cat-name">战术射击（FPS）★ 核心品类</div>
+        <div class="cat-name">战术射击（FPS）· 核心品类</div>
         <div class="game-list">
           <b>《无畏契约》超凡 · 730h</b> ·
           <b>《三角洲行动》绝密 KD 1.6（搜打撤 270h / 大战场 50h）</b> ·
@@ -900,7 +852,7 @@
       <div class="game-category">
         <div class="cat-name">二次元 / 策略养成</div>
         <div class="game-list">
-          <b>《明日方舟》★</b> ·
+          <b>《明日方舟》</b> ·
           《明日方舟·终末地》开服玩家 ·
           《重返未来1999》 · 《崩坏·星穹铁道》
         </div>
