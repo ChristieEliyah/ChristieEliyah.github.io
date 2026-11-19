@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《明日方舟》拆解：它的难度不在数值，在信息</title>
+<style>
+:root{--fg:#1a1a1a;--muted:#6b6b6b;--line:#e6e6e6;--bg:#fdfdfc;--accent:#1F4E8C;--mark:#fff3c4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+font:17px/1.85 -apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:760px;margin:0 auto;padding:64px 28px 120px}
+h1{font-size:30px;line-height:1.35;margin:0 0 28px;letter-spacing:-.3px}
+h2{font-size:21px;margin:52px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:17.5px;margin:32px 0 10px;color:#111}
+p{margin:12px 0}
+ul,ol{margin:12px 0;padding-left:24px}
+li{margin:6px 0}
+strong{font-weight:700;color:#000}
+blockquote{margin:18px 0;padding:12px 18px;border-left:3px solid var(--accent);
+background:#f6f8fb;color:#2a2a2a;border-radius:0 6px 6px 0}
+table{width:100%;table-layout:auto;border-collapse:collapse;margin:20px 0;font-size:15px}
+th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+th{background:#f2f4f7;font-weight:700}
+th:first-child,td:first-child{min-width:88px}
+th:nth-child(3),td:nth-child(3){min-width:72px}
+tbody tr:nth-child(even){background:#fafafa}
+hr{border:0;border-top:1px solid var(--line);margin:44px 0}
+.foot{margin-top:64px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media (max-width:640px){main{padding:32px 18px 80px}body{font-size:16px}
+  table{font-size:13.5px}th,td{padding:7px 8px}}
+</style></head><body><main>
+<a style="display:inline-block;margin-bottom:28px;color:#6b6b6b;text-decoration:none;font-size:13px;border-bottom:1px solid #d8dbe0;padding-bottom:2px;" href="../">← 返回作品集首页</a>
+<h1>《明日方舟》拆解：它的难度不在数值，在信息</h1>
+
+<blockquote>
+<p>作者：陈思源 · 2026-11</p>
+</blockquote>
+<p>拉个底：2020 年开始玩，主线通关，活动通关七成，月卡加零星礼包累计两千上下，危机合约多次保底 18 级，蚀刻章镀层基本齐。</p>
+<p>这篇不写百科。只写我玩下来的判断，以及如果我坐在设计位子上会怎么改——包括哪些我明确不改。</p>
+<p>我的拆法分三层：<strong>先看它在逼玩家做什么决策，再看这些决策被什么系统支撑，最后看这套支撑付出了什么代价。</strong> 三层里，第三层最难，因为它要求你承认设计者的取舍，而不是只挑毛病。</p>
+<hr />
+<h2 id="_2">一、它到底难在哪：两个决策，四个约束</h2>
+<p>战斗里同时要管四样东西：费用、部署位、时间窗、阻挡数。</p>
+<p>但我不想把这四个并列，因为<strong>它们不在同一个层级上</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>机制</th>
+<th>谁在控制</th>
+<th>层级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>费用 Cost</strong></td>
+<td>自然回复 + 先锋技能产出；<strong>撤退返还 50%</strong>；再部署费用逐次递增</td>
+<td>玩家</td>
+<td>决策资源</td>
+</tr>
+<tr>
+<td><strong>时间窗</strong></td>
+<td>技能 CD + 再部署冷却；技能分自动回复 / 攻击回复 / 受击回复三类</td>
+<td>玩家</td>
+<td>决策资源</td>
+</tr>
+<tr>
+<td><strong>部署位</strong></td>
+<td>地面 / 高台二分，部分干员可跨类型</td>
+<td>地图</td>
+<td><strong>约束</strong></td>
+</tr>
+<tr>
+<td><strong>阻挡数</strong></td>
+<td>每名地面干员可阻挡的敌人数</td>
+<td>干员</td>
+<td><strong>约束</strong></td>
+</tr>
+</tbody>
+</table>
+<p>部署位是地图给的，阻挡数是干员给的——这两样<strong>开局前基本就定死了</strong>。真正在局内做选择的只有两个：</p>
+<p><strong>先放谁、什么时候开技能。</strong></p>
+<p>四件事挤在一起，实际是两个决策点。这两个点做错任何一个，这一局就没了。一个重装提前八秒下场，后面整局都在补这个洞。</p>
+<p>所以明日方舟的难度是这么来的：<strong>它把决策压缩到极少的次数，然后把每一次的代价放大。</strong></p>
+<h3 id="_3">代价也是从这里来的</h3>
+<p>决策点少，意味着<strong>答案可以被完整复述</strong>。"抄作业"之所以有效，不是因为玩家懒，是因为这游戏的解法可以写成一串指令——放谁、放哪、几秒开技能。</p>
+<p>再往下推一层：<strong>方舟本质是一个可攻略的谜题，不是不可预测的对抗。</strong> 谜题的上限是"被解开"，对抗的上限是"一直被玩"。这一条决定了它的内容必须不停生产，而不能靠玩家互相消耗——这是它后来所有产能压力的源头。</p>
+<p>这也是它对新手最不友好的地方：别人给你答案，你不需要理解，也能过。</p>
+<hr />
+<h2 id="_4">二、关卡是怎么复用的：六个维度，只有两个在制造考验</h2>
+<p>敌人机制我能拆出六个维度：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>具体机制</th>
+<th>改变的是什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>路径阻断</strong></td>
+<td>改变行进路线、闪现、飞行（无视地面阻挡）</td>
+<td><strong>解法结构</strong></td>
+</tr>
+<tr>
+<td><strong>数值碾压</strong></td>
+<td>高甲高抗、护盾、回血、召唤小怪</td>
+<td><strong>解法结构</strong></td>
+</tr>
+<tr>
+<td>特殊状态</td>
+<td>隐匿（需反隐）、眩晕、沉默</td>
+<td>对策配置</td>
+</tr>
+<tr>
+<td>索敌干扰</td>
+<td>优先攻击最后部署 / 特定职业</td>
+<td>部署顺序</td>
+</tr>
+<tr>
+<td>地形交互</td>
+<td>点燃地面、增加重力、改变可部署格</td>
+<td>关卡机制</td>
+</tr>
+<tr>
+<td>预警节奏</td>
+<td>高压波次前给预警期</td>
+<td>难度曲线</td>
+</tr>
+</tbody>
+</table>
+<p><strong>只有前两个会改变解法。</strong></p>
+<p>飞行、闪现、绕路——改变的是"我这套站位还成不成立"。
+高甲、高抗、护盾、回血——改变的是"我这套输出够不够"。</p>
+<p>后面四个呢？隐匿要带反隐，眩晕沉默要带对策，索敌要调整部署顺序，地形要换职业，波次预警只是让你提前攒技能。它们让这一关<strong>看起来不一样</strong>，但不改解题的结构。</p>
+<p>举一个最近的例子：七周年的战壕关，把高台全改成战壕，干员的部署方式和移动方式都变了——这不是加了新敌兵，这是<strong>把"部署位"这一维整个重写了</strong>。它属于第一类，因为它换了结构，不是换了皮。</p>
+<p>对比《王国保卫战》：后者用塔位固定 + 兵营/英雄前顶解决路径阻断，变量更少，操作更直接。方舟的差异在于<strong>干员即塔、塔即角色</strong>——战术变量和情感变量绑在一起，所以"抄作业"也有代入感。</p>
+<p><strong>这套做法的代价很清楚</strong>：每加一个真机制，就要配一批新敌人、一块新地形、一套新教学，美术和关卡成本是线性的。所以它只能放在活动和主线关键章节里，日常关卡永远在复用旧骨架。</p>
+<hr />
+<h2 id="_5">三、养成为什么不焦虑：三件事必须同时成立</h2>
+<p>很多人说方舟"良心"，是因为不抽也能玩。但我觉得原因更具体：<strong>三件事同时成立，缺一件就不成立。</strong></p>
+<ol>
+<li><strong>没有随机词条。</strong> 刷够材料就变强，没有"刷三个月不如欧一次"。</li>
+<li><strong>潜能提升极小。</strong> 零潜到满潜大约 10%，重氪买到的是极限作业的空间，不是日常通关的门票。</li>
+<li><strong>核心机制在精二就解锁完了。</strong> 专精和模组是加成，不是门槛。</li>
+</ol>
+<p>三条叠在一起，"抽到即毕业"才成立。<strong>只要有一条松动，玩家就会开始算概率，焦虑立刻回来。</strong></p>
+<h3 id="_6">付费分层：这套设计对不同人的效果</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>年付费</th>
+<th>年合成玉</th>
+<th>能覆盖几个限定池</th>
+<th>核心体验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>零氪</td>
+<td>¥0</td>
+<td>约 15 万（≈250 抽）</td>
+<td>勉强覆盖 1 个 300 井</td>
+<td>依赖规划，容错最低</td>
+</tr>
+<tr>
+<td><strong>月卡党</strong></td>
+<td>¥360</td>
+<td>约 22 万（≈367 抽）</td>
+<td>1 个 300 井 + 余量</td>
+<td><strong>性价比最优</strong>，4 次限定里稳拿 1–2 个</td>
+</tr>
+<tr>
+<td>中 R</td>
+<td>¥2,000–5,000</td>
+<td>40 万+（≈667 抽）</td>
+<td>2 个 300 井</td>
+<td>大小月卡 + 礼包，付费锚点是礼包</td>
+</tr>
+<tr>
+<td>重 R</td>
+<td>¥10,000+</td>
+<td>按需</td>
+<td>全限定 + 追潜能</td>
+<td>锚点是潜能，与平民差距在"极限作业"</td>
+</tr>
+</tbody>
+</table>
+<p>这张表里最关键的一行是<strong>月卡党</strong>：年付 360 元就能覆盖一个 300 井，还能剩。这意味着<strong>这个游戏的付费中位数极低</strong>——它靠的是"大多数人愿意付一点"，不是"少数人付很多"。</p>
+<h3 id="_7">代价也在这里</h3>
+<p><strong>养成线浅，就意味着它很快会被走完。</strong> 走完之后，玩家手里有大量溢出材料，却没有下一个可以投入的目标。</p>
+<p>这就是"长草"的结构性来源——<strong>不是内容少，是成长这条线断头了</strong>。</p>
+<p>鹰角用模组接了一段，但模组是给旧干员打补丁，它不是新目标，是"让旧角色别落灰"。</p>
+<hr />
+<h2 id="_8">四、商业化：把"沉船"从灾难降级成可惜</h2>
+<p>方舟的池子和米池不是"良心与不良心"的区别，是<strong>两套不同的风险分配</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>明日方舟</th>
+<th>米哈游系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>六星 / 五星基础概率</td>
+<td><strong>2%</strong></td>
+<td>0.6%</td>
+</tr>
+<tr>
+<td>保底</td>
+<td>50 抽后概率线性提升（软保底）</td>
+<td>90 抽硬保底</td>
+</tr>
+<tr>
+<td>期望出货</td>
+<td><strong>约 34 抽</strong></td>
+<td>约 63 抽</td>
+</tr>
+<tr>
+<td>池型</td>
+<td><strong>只有干员池</strong>，无专武</td>
+<td>角色 + 武器双池</td>
+</tr>
+<tr>
+<td>歪了之后</td>
+<td><strong>下一次六星必为 UP</strong>（大保底），最多 198 抽必得</td>
+<td>下一次必为 UP</td>
+</tr>
+<tr>
+<td>副产物</td>
+<td>凭证可换干员、抽卡券</td>
+<td>星辉/星尘换抽卡券</td>
+</tr>
+</tbody>
+</table>
+<p>两个数放在一起看：<strong>舟的"歪"大约三十抽一次，米的"歪"大约七十五抽一次。挫败感的频率差了一倍。</strong></p>
+<p>这里要补一句：<strong>方舟的"歪"是有兜底的</strong>——歪了一次，下一个六星必定是当期 UP。所以它的挫败不是"白抽"，是"晚一次抽到"。这一点比基础概率更能解释它为什么不焦虑。</p>
+<p>另外<strong>标准池和限定池的概率不一样</strong>：标准寻访是两个 UP 各占 25%（合计 50%），限定寻访才是单 UP 占 70%、双限定各 35%。这两个数字经常被混着说，但它们的风险完全不是一回事——标准池你有一半概率拿到指定那个，限定池是七成。</p>
+<p><strong>我不认为这是纯粹的善意。</strong> 它是一笔交易：<strong>用更低的单用户付费上限，换更高的留存和更好的口碑。</strong></p>
+<p>这笔交易有个前提——内容供给必须稳定。米池那种模型，就算某个版本产能下滑，靠少数大 R 也能撑住流水；方舟这种模型，一旦内容断档，收入会直接掉下来，因为没有高 ARPPU 兜底。</p>
+<p>每年四次限定池，形成四个收入峰值，峰谷差能到十倍。这个结构好不好，取决于它能不能一直按节奏供内容。</p>
+<hr />
+<h2 id="_9">五、基建：从经济支柱到每日仪式</h2>
+<p>一套成型基建（三贸易、三制造、三发电，全三级）的日产大概是三到四万龙门币、三到四万作战记录经验。</p>
+<p>对照消耗：精二一次十八万，约等于五到六天的基建产出；专三一次十五到二十万，还要加材料。</p>
+<p><strong>产出曲线和养成曲线在中后期就没有交点了。</strong></p>
+<ul>
+<li>新手期：全缺</li>
+<li>成长期：看不出缺，但永远不够</li>
+<li>成熟期：全溢出</li>
+</ul>
+<p>我不觉得问题在"玩法浅"。问题在<strong>它还在每天叫你上线，但它已经不重要了</strong>。</p>
+<p>我否掉过两个方案：加装饰和皮肤——治不了"没意义"，只治"没东西买"；加随机事件——把收菜变成抽奖，更烦。</p>
+<p>真要改，我只会做一件事：<strong>给溢出材料一个出口。</strong> 哪怕只是把多余材料换成基建加速券，它也能让"上线有收益"这条线重新连上。</p>
+<hr />
+<h2 id="_10">六、三个真问题，如果只能改一个</h2>
+<p><strong>一，信息不透明。</strong> 敌人属性不可见，打不过的时候你不知道是站位错了还是输出不够，只能去 wiki 反查。这是新人流失最大的原因——<strong>不是难，是"不知道为什么输"</strong>。</p>
+<p><strong>二，长草。</strong> 活动间隔期没有目标。肉鸽已经接住了这部分玩家，但肉鸽自己的门槛又太高，新玩家进不去。</p>
+<p><strong>三，社交空白。</strong> 全靠站外社区。</p>
+<p>如果只能改一个，我改第一个：关卡内长按敌人，弹一个四项面板（血、攻、防、法抗）。</p>
+<p>理由很功利——<strong>它是唯一一个"改完之后不用再改别的"的方案</strong>。</p>
+<p>另外两个我明确不动：
+- <strong>长草是产能问题，不是设计问题。</strong> 加玩法只会把产能压力转成设计压力，没用。
+- <strong>社交是定位问题，动了会伤到核心用户。</strong> 方舟的"孤独感"是它世界观的一部分，强行加社交系统（公会、组队）会破坏这个基调。</p>
+<hr />
+<h2 id="_11">七、我为什么还在玩</h2>
+<p>六年，月卡，两千多块。</p>
+<p>让我留下的不是剧情，也不是美术。是<strong>每个新活动都要重新想一遍的那十分钟</strong>——哪条路先堵、技能留给谁、这个高台让不让。</p>
+<p>我知道它的结构问题在哪：养成断头、基建空转、信息不透明。<strong>但那十分钟的决策密度，市面上没有第二个塔防能给。</strong></p>
+<p>它最好的一点是"允许你输"：理智便宜，试错成本低，失败能复盘。这一点比很多"高难度"游戏都聪明——<strong>它惩罚的是判断，不是时间。</strong></p>
+<p>以上都是玩家视角的观察。内部一定有我不知道的约束。</p>
+<hr />
+<p><em>本文所有数值来自游戏内实测与公开资料交叉验证；标准池与限定池的概率参数已分别标注。</em></p>
+<div class="foot">陈思源 · 2026-11 · 数值来自游戏内实测与公开资料交叉验证</div>
+</main></body></html>
